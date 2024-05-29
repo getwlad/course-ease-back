@@ -1,4 +1,4 @@
-import { Course, Student } from "../models";
+import { Course, Student, Teacher } from "../models";
 import { Person } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
 
@@ -26,6 +26,18 @@ export class StudentRepository {
         {
           model: Course,
           as: "course",
+          include: [
+            {
+              model: Teacher,
+              as: "teacher",
+              include: [
+                {
+                  model: Person,
+                  as: "person",
+                },
+              ],
+            },
+          ],
         },
       ],
     });
@@ -93,6 +105,18 @@ export class StudentRepository {
         {
           model: Course,
           as: "course",
+          include: [
+            {
+              model: Teacher,
+              as: "teacher",
+              include: [
+                {
+                  model: Person,
+                  as: "person",
+                },
+              ],
+            },
+          ],
         },
       ],
     });

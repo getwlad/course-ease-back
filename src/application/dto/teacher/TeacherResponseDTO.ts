@@ -20,7 +20,9 @@ export function mapTeacherToResponseDTO(teacher: Teacher): TeacherResponseDTO {
     cpfCnpj: teacher.cpfCnpj,
     specialization: teacher.specialization,
     experienceYears: teacher.experienceYears,
-    course: teacher.course?.id ? mapCourseToDTO(teacher.course) : null,
     personData: mapPersonToResponseDTO(teacher.person),
+    course: teacher.course?.id
+      ? mapCourseToDTO(teacher.course, teacher.person!.name!)
+      : null,
   };
 }

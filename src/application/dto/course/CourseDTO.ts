@@ -9,13 +9,16 @@ export interface CourseDTO {
   teacher: string | null;
 }
 
-export function mapCourseToDTO(course: Course): CourseDTO {
+export function mapCourseToDTO(
+  course: Course,
+  teacherName: string | null = null
+): CourseDTO {
   return {
     id: course.id,
     name: course.name,
     category: course.category,
     active: course.active,
     description: course.description,
-    teacher: course.teacher?.id ? course.teacher.person.name : null,
+    teacher: course.teacher?.id ? course.teacher.person.name : teacherName,
   };
 }
