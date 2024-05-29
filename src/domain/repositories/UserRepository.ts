@@ -5,13 +5,8 @@ export class UserRepository {
     return User.findAll();
   }
 
-  async findById(id: number): Promise<User> {
+  async findById(id: number): Promise<User | null> {
     const user = await User.findByPk(id);
-
-    if (!user) {
-      throw new Error(`Usuário com id: ${id} não encontrado.`);
-    }
-
     return user;
   }
 
@@ -27,6 +22,11 @@ export class UserRepository {
   async delete(user: User): Promise<User> {
     user.active = false;
     await this.update(user);
+    return user;
+  }
+
+  async findByUsername(username: string): Promise<User | null> {
+    const user = await User.findOne({ where: { username } });
     return user;
   }
 }

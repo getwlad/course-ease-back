@@ -11,6 +11,8 @@ const studentController = new StudentController();
  *   get:
  *     tags: [Student]
  *     summary: Retorna todos os estudantes.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de todos os estudantes.
@@ -36,6 +38,8 @@ router.get("/", studentController.getAllStudents.bind(studentController));
  *         description: ID do estudante a ser retornado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Estudante retornado com sucesso.
@@ -54,6 +58,8 @@ router.get("/:id", studentController.getStudentById.bind(studentController));
  *   post:
  *     tags: [Student]
  *     summary: Cria um novo estudante.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -87,6 +93,8 @@ router.post(
  *         description: ID do estudante a ser atualizado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,6 +130,8 @@ router.put(
  *         description: ID do estudante a ser excluído.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Estudante excluído com sucesso.

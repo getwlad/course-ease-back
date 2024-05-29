@@ -18,11 +18,11 @@ export class UserService {
   }
 
   async getUserById(id: number): Promise<UserResponseDTO> {
-    const user: User = await this.findUserrById(id);
+    const user: User = await this.findUserById(id);
     return this.convertToDTO(user);
   }
 
-  async findUserrById(id: number): Promise<User> {
+  async findUserById(id: number): Promise<User> {
     const user: User | null = await this.userRepository.findById(id);
     if (!user) {
       throw new Error(`Usuário com id: ${id} não encontrado.`);
@@ -31,25 +31,35 @@ export class UserService {
   }
 
   async createUser(userData: Partial<User>): Promise<UserResponseDTO> {
-    return this.userRepository.create(userData);
+    userData.active = true;
+    return this.convertToDTO(await this.userRepository.create(userData));
   }
 
   async updateUser(
     id: number,
     userData: UserRequestDTO
   ): Promise<UserResponseDTO> {
-    const user: User = await this.findUserrById(id);
+    const user: User = await this.findUserById(id);
     Object.assign(user, userData);
     return this.convertToDTO(await this.userRepository.update(user));
   }
 
   async softDeleteUser(id: number): Promise<UserResponseDTO> {
-    const user: User = await this.findUserrById(id);
+    const user: User = await this.findUserById(id);
     user.active = false;
     return this.convertToDTO(await this.userRepository.update(user));
   }
 
   private convertToDTO(user: User): UserResponseDTO {
     return mapUserToRespDTO(user);
+  }
+
+  async findByUsername(username: string): Promise<User> {
+    const user: User | null =
+      await this.userRepository.findByUsername(username);
+    if (!user || !user.active) {
+      throw new Error(`Usuário não cadastrado ou desativado.`);
+    }
+    return user;
   }
 }

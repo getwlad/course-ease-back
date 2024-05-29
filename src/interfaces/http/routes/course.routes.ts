@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { CourseController } from "../../../application/controllers/CourseController,";
+
 import CourseValidationService from "../../../application/services/course/CourseValidationService";
+import { CourseController } from "../../../application/controllers/CourseController,";
 
 const router = Router();
 const courseController = new CourseController();
@@ -11,6 +12,8 @@ const courseController = new CourseController();
  *   get:
  *     tags: [Course]
  *     summary: Retorna todos os cursos.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de todos os cursos.
@@ -36,6 +39,8 @@ router.get("/", courseController.getAllCourses.bind(courseController));
  *         description: ID do curso a ser retornado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Curso retornado com sucesso.
@@ -54,6 +59,8 @@ router.get("/:id", courseController.getCourseById.bind(courseController));
  *   post:
  *     tags: [Course]
  *     summary: Cria um novo curso.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -87,6 +94,8 @@ router.post(
  *         description: ID do curso a ser atualizado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,6 +131,8 @@ router.put(
  *         description: ID do curso a ser excluído.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Curso excluído com sucesso.

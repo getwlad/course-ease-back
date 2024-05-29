@@ -1,7 +1,7 @@
 import { SwaggerDefinition, Options } from "swagger-jsdoc";
 import "./../../application/schemas/swaggerSchemas";
 const swaggerDefinition: SwaggerDefinition = {
-  openapi: "3.0.0",
+  openapi: "3.0.1",
   info: {
     title: "CourseEase Documentation",
     version: "1.0.0",
@@ -13,6 +13,16 @@ const swaggerDefinition: SwaggerDefinition = {
       description: "Development server",
     },
   ],
+  basePath: "/",
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+    },
+  },
 };
 
 const options: Options = {

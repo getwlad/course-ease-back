@@ -1,4 +1,11 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  BeforeSave,
+} from "sequelize-typescript";
+import bcrypt from "bcrypt";
 
 @Table({
   tableName: "User",
@@ -31,4 +38,11 @@ export default class User extends Model {
     allowNull: false,
   })
   active!: boolean;
+
+  @BeforeSave
+  static async hashPassword(user: User) {
+    if (user.changed("password")) {
+      user.password = await bcrypt.hash(user.password, 8);
+    }
+  }
 }

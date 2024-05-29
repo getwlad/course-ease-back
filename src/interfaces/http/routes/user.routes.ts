@@ -11,6 +11,8 @@ const userController = new UserController();
  *   get:
  *     tags: [User]
  *     summary: Retorna todos os usuários.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de todos os usuários.
@@ -36,6 +38,8 @@ router.get("/", userController.getAllUsers.bind(userController));
  *         description: ID do usuário a ser retornado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Usuário retornado com sucesso.
@@ -50,32 +54,6 @@ router.get("/:id", userController.getUserById.bind(userController));
 
 /**
  * @swagger
- * /user:
- *   post:
- *     tags: [User]
- *     summary: Cria um novo usuário.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UserRequest'
- *     responses:
- *       200:
- *         description: Usuário criado com sucesso.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UserResponse'
- */
-router.post(
-  "/",
-  UserValidationService.validateUserCreate,
-  userController.createUser.bind(userController)
-);
-
-/**
- * @swagger
  * /user/{id}:
  *   put:
  *     tags: [User]
@@ -87,6 +65,8 @@ router.post(
  *         description: ID do usuário a ser atualizado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,6 +102,8 @@ router.put(
  *         description: ID do usuário a ser excluído.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Usuário excluído com sucesso.

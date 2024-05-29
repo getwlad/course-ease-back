@@ -29,16 +29,6 @@ export class UserController {
     }
   }
 
-  async createUser(req: Request, res: Response): Promise<void> {
-    try {
-      const userData: UserRequestDTO = req.body;
-      const user: UserResponseDTO = await this.userService.createUser(userData);
-      res.status(201).json(user);
-    } catch (error: any) {
-      res.status(500).json({ message: error.message });
-    }
-  }
-
   async updateUser(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);

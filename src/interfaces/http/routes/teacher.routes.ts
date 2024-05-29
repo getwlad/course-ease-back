@@ -11,6 +11,8 @@ const teacherController = new TeacherController();
  *   get:
  *     tags: [Teacher]
  *     summary: Retorna todos os professores.
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de todos os professores.
@@ -36,6 +38,8 @@ router.get("/", teacherController.getAllTeachers.bind(teacherController));
  *         description: ID do professor a ser retornado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Professor retornado com sucesso.
@@ -54,6 +58,8 @@ router.get("/:id", teacherController.getTeacherById.bind(teacherController));
  *   post:
  *     tags: [Teacher]
  *     summary: Cria um novo professor.
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -87,6 +93,8 @@ router.post(
  *         description: ID do professor a ser atualizado.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -122,6 +130,8 @@ router.put(
  *         description: ID do professor a ser excluído.
  *         schema:
  *           type: string
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Professor excluído com sucesso.
