@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { TeacherController } from "../../../application/controllers/TeacherController";
-import TeacherValidationService from "../../../application/services/teacher/TeacherValidationService";
+import TeacherValidationService from "../../../application/services/teacher/TeacherSchemaService";
 
 const router = Router();
 const teacherController = new TeacherController();

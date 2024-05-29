@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { SessionController } from "../../../application/controllers/SessionController";
-import UserValidationService from "../../../application/services/user/UserValidationService";
+import { AuthenticationController } from "../../../application/controllers/AuthenticationController";
+import UserValidationService from "../../../application/services/user/UserSchemaService";
 
 const router = Router();
-const sessionController = new SessionController();
+const authenticationController = new AuthenticationController();
 
 /**
  * @swagger
@@ -28,7 +28,7 @@ const sessionController = new SessionController();
 router.post(
   "/login",
   UserValidationService.validateUserCreate,
-  sessionController.authenticate.bind(sessionController)
+  authenticationController.authenticate.bind(authenticationController)
 );
 
 /**
@@ -54,7 +54,7 @@ router.post(
 router.post(
   "/register",
   UserValidationService.validateUserCreate,
-  sessionController.createUser.bind(sessionController)
+  authenticationController.createUser.bind(authenticationController)
 );
 
 export default router;

@@ -9,7 +9,7 @@ export interface StudentResponseDTO {
   id: number;
   cpf: string;
   enrollment: string;
-  course: CourseDTO;
+  course: CourseDTO | null;
   personData: PersonResponseDTO;
 }
 
@@ -18,7 +18,7 @@ export function mapStudentToResponseDTO(student: Student): StudentResponseDTO {
     id: student.id,
     cpf: student.cpf,
     enrollment: student.enrollment,
-    course: mapCourseToDTO(student.course),
+    course: student.course?.id ? mapCourseToDTO(student.course) : null,
     personData: mapPersonToResponseDTO(student.person),
   };
 }

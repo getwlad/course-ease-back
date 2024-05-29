@@ -45,9 +45,9 @@ export default class Teacher extends Model {
   @ForeignKey(() => Course)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
-  courseId!: number;
+  courseId!: number | null;
 
   @ForeignKey(() => Person)
   @Column({
@@ -59,6 +59,6 @@ export default class Teacher extends Model {
   @BelongsTo(() => Person)
   person!: Person;
 
-  @BelongsTo(() => Course)
-  course!: Course;
+  @BelongsTo(() => Course, { foreignKey: "courseId", constraints: false })
+  course!: Course | null;
 }

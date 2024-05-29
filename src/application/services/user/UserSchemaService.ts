@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserRequestSchema } from "../../schemas/UserRequestSchema";
 
-export default class UserValidationService {
+export default class UserSchemaService {
   static async validateUserCreate(req: Request, res: Response, next: Function) {
     const userData = req.body;
     try {

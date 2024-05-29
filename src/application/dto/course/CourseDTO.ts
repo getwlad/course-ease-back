@@ -6,7 +6,7 @@ export interface CourseDTO {
   category: string;
   active: boolean;
   description: string;
-  teacher: string;
+  teacher: string | null;
 }
 
 export function mapCourseToDTO(course: Course): CourseDTO {
@@ -16,6 +16,6 @@ export function mapCourseToDTO(course: Course): CourseDTO {
     category: course.category,
     active: course.active,
     description: course.description,
-    teacher: course.teacher.person.name,
+    teacher: course.teacher?.id ? course.teacher.person.name : null,
   };
 }

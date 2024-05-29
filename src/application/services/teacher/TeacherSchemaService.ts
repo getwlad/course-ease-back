@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { TeacherRequestSchema } from "../../schemas/TeacherRequestSchema";
 
-export default class TeacherValidationService {
+export default class TeacherSchemaService {
   static async validateTeacherCreate(
     req: Request,
     res: Response,

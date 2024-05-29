@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../../../application/controllers/UserController";
-import UserValidationService from "../../../application/services/user/UserValidationService";
+import UserValidationService from "../../../application/services/user/UserSchemaService";
 
 const router = Router();
 const userController = new UserController();

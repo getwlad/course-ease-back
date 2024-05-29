@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 import { UserService } from "./UserService";
-import TokenService from "../../../domain/services/TokenService";
+import TokenService from "../../../infrastructure/external_services/TokenService";
 import { UserRequestDTO } from "../../dto/user/UserRequestDTO";
 import { UserResponseDTO } from "../../dto/user/UserResponseDTO";
 
-class SessionService {
+class AuthenticationService {
   private userService: UserService;
   private tokenService: TokenService;
 
@@ -31,4 +31,4 @@ class SessionService {
   }
 }
 
-export default SessionService;
+export default AuthenticationService;

@@ -1,12 +1,50 @@
-import { Course } from "../models";
+import { Course, Person, Student, Teacher } from "../models";
 
 export class CourseRepository {
   async findAll(): Promise<Course[]> {
-    return Course.findAll();
+    return Course.findAll({
+      nest: true,
+      include: [
+        {
+          model: Teacher,
+          as: "teacher",
+          include: [
+            {
+              model: Person,
+              as: "person",
+            },
+          ],
+        },
+      ],
+    });
   }
 
   async findById(id: number): Promise<Course | null> {
-    return await Course.findByPk(id);
+    return await Course.findByPk(id, {
+      nest: true,
+      include: [
+        {
+          model: Teacher,
+          as: "teacher",
+          include: [
+            {
+              model: Person,
+              as: "person",
+            },
+          ],
+        },
+        {
+          model: Student,
+          as: "students",
+          include: [
+            {
+              model: Person,
+              as: "person",
+            },
+          ],
+        },
+      ],
+    });
   }
 
   async create(courseData: Partial<Course>): Promise<Course> {
@@ -22,5 +60,34 @@ export class CourseRepository {
     course.active = false;
     await this.update(course);
     return course;
+  }
+
+  async reloadModel(course: Course) {
+    return await course.reload({
+      raw: true,
+      nest: true,
+      include: [
+        {
+          model: Teacher,
+          as: "teacher",
+          include: [
+            {
+              model: Person,
+              as: "person",
+            },
+          ],
+        },
+        {
+          model: Student,
+          as: "students",
+          include: [
+            {
+              model: Person,
+              as: "person",
+            },
+          ],
+        },
+      ],
+    });
   }
 }

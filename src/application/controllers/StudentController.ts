@@ -33,7 +33,7 @@ export class StudentController {
 
   async createStudent(req: Request, res: Response): Promise<void> {
     try {
-      const studentData: StudentRequestDTO = req.body.studentData;
+      const studentData: StudentRequestDTO = req.body;
       const student: StudentResponseDTO =
         await this.studentService.createStudent(studentData);
       res.status(201).json(student);

@@ -10,7 +10,7 @@ export interface TeacherResponseDTO {
   cpfCnpj: string;
   specialization: string;
   experienceYears: number;
-  course: CourseDTO;
+  course: CourseDTO | null;
   personData: PersonResponseDTO;
 }
 
@@ -20,7 +20,7 @@ export function mapTeacherToResponseDTO(teacher: Teacher): TeacherResponseDTO {
     cpfCnpj: teacher.cpfCnpj,
     specialization: teacher.specialization,
     experienceYears: teacher.experienceYears,
-    course: mapCourseToDTO(teacher.course),
+    course: teacher.course?.id ? mapCourseToDTO(teacher.course) : null,
     personData: mapPersonToResponseDTO(teacher.person),
   };
 }

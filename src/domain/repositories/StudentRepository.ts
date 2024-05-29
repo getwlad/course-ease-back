@@ -1,14 +1,34 @@
-import { Student } from "../models";
+import { Course, Student } from "../models";
 import { Person } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
 
 export class StudentRepository {
   async findAll(): Promise<Student[]> {
-    return Student.findAll();
+    return Student.findAll({
+      nest: true,
+      include: [
+        {
+          model: Person,
+          as: "person",
+        },
+      ],
+    });
   }
 
   async findById(id: number): Promise<Student> {
-    const student = await Student.findByPk(id);
+    const student = await Student.findByPk(id, {
+      nest: true,
+      include: [
+        {
+          model: Person,
+          as: "person",
+        },
+        {
+          model: Course,
+          as: "course",
+        },
+      ],
+    });
 
     if (!student) {
       throw new Error(`Estudante com id: ${id} não encontrado.`);
@@ -19,7 +39,8 @@ export class StudentRepository {
 
   async create(
     studentData: Partial<Student>,
-    personData: Partial<Person>
+    personData: Partial<Person>,
+    enrollment: string
   ): Promise<Student> {
     let transaction;
     try {
@@ -28,12 +49,13 @@ export class StudentRepository {
       const person = await Person.create(personData, { transaction });
 
       studentData.personId = person.id;
+      studentData.enrollment = enrollment;
 
-      const teacher = await Student.create(studentData, { transaction });
+      const student = await Student.create(studentData, { transaction });
 
       await transaction.commit();
 
-      return teacher;
+      return this.reloadModel(student);
     } catch (error) {
       if (transaction) await transaction.rollback();
       throw error;
@@ -42,7 +64,7 @@ export class StudentRepository {
 
   async update(student: Student): Promise<Student> {
     await student.save();
-    return student;
+    return this.reloadModel(student);
   }
 
   async delete(student: Student): Promise<void> {
@@ -59,5 +81,34 @@ export class StudentRepository {
       if (transaction) await transaction.rollback();
       throw error;
     }
+  }
+
+  async reloadModel(student: Student) {
+    return await student.reload({
+      include: [
+        {
+          model: Person,
+          as: "person",
+        },
+        {
+          model: Course,
+          as: "course",
+        },
+      ],
+    });
+  }
+
+  async findByCPF(cpf: string): Promise<Student | null> {
+    const student = await Student.findOne({ where: { cpf } });
+    return student;
+  }
+
+  async existsByCPF(cpf: string): Promise<boolean> {
+    return (await this.findByCPF(cpf)) !== null;
+  }
+
+  async existsByEnrollment(enrollment: string): Promise<boolean> {
+    const student = await Student.findOne({ where: { enrollment } });
+    return student !== null;
   }
 }

@@ -29,4 +29,8 @@ export class UserRepository {
     const user = await User.findOne({ where: { username } });
     return user;
   }
+
+  async existsByUsername(username: string): Promise<boolean> {
+    return (await this.findByUsername(username)) !== null;
+  }
 }

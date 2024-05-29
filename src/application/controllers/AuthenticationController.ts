@@ -1,19 +1,22 @@
 import { Request, Response } from "express";
-import SessionService from "../services/user/SessionService";
+import AuthenticationService from "../services/user/AuthenticationService";
 import { UserRequestDTO } from "../dto/user/UserRequestDTO";
 import { UserResponseDTO } from "../dto/user/UserResponseDTO";
 
-export class SessionController {
-  private sessionService: SessionService;
+export class AuthenticationController {
+  private authenticationService: AuthenticationService;
   constructor() {
-    this.sessionService = new SessionService();
+    this.authenticationService = new AuthenticationService();
   }
 
   async authenticate(req: Request, res: Response) {
     const { username, password } = req.body;
 
     try {
-      const result = await this.sessionService.authenticate(username, password);
+      const result = await this.authenticationService.authenticate(
+        username,
+        password
+      );
       return res.json(result);
     } catch (error: any) {
       console.error(error);
@@ -25,7 +28,7 @@ export class SessionController {
     try {
       const userData: UserRequestDTO = req.body;
       const user: UserResponseDTO =
-        await this.sessionService.createUser(userData);
+        await this.authenticationService.createUser(userData);
       res.status(201).json(user);
     } catch (error: any) {
       res.status(500).json({ message: error.message });

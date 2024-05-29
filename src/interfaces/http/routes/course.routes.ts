@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import CourseValidationService from "../../../application/services/course/CourseValidationService";
+import CourseValidationService from "../../../application/services/course/CourseSchemaService";
 import { CourseController } from "../../../application/controllers/CourseController,";
 
 const router = Router();

@@ -1,6 +1,7 @@
-import { Person } from "../../../domain/models";
+import { v4 as uuidv4 } from "uuid";
 import { Student } from "../../../domain/models";
 import { StudentRepository } from "../../../domain/repositories/StudentRepository";
+import { StudentValidationService } from "../../../domain/services/StudentValidationService";
 import { StudentDTO, mapStudentToDTO } from "../../dto/student/StudentDTO";
 import { StudentRequestDTO } from "../../dto/student/StudentRequestDTO";
 import {
@@ -10,9 +11,10 @@ import {
 
 export class StudentService {
   private studentRepository: StudentRepository;
-
+  private studentValidation: StudentValidationService;
   constructor() {
     this.studentRepository = new StudentRepository();
+    this.studentValidation = new StudentValidationService();
   }
 
   async getAllStudents(): Promise<StudentDTO[]> {
@@ -35,8 +37,19 @@ export class StudentService {
   async createStudent(
     studentData: StudentRequestDTO
   ): Promise<StudentResponseDTO> {
+    await this.studentValidation.validateCPFRegistered(studentData.cpf);
+    let enrollment = uuidv4();
+
+    while (await this.studentRepository.existsByEnrollment(enrollment)) {
+      enrollment = uuidv4();
+    }
+
     return this.convertToRespDTO(
-      await this.studentRepository.create(studentData, studentData.personData)
+      await this.studentRepository.create(
+        studentData,
+        studentData.personData,
+        enrollment
+      )
     );
   }
 

@@ -8,7 +8,7 @@ export interface CourseResponseDTO {
   category: string;
   active: boolean;
   description: string;
-  teacher: TeacherDTO;
+  teacher: TeacherDTO | null;
   students: StudentDTO[];
 }
 
@@ -19,7 +19,8 @@ export function mapCourseToResponseDTO(course: Course): CourseResponseDTO {
     category: course.category,
     active: course.active,
     description: course.description,
-    teacher: mapTeacherToDTO(course.teacher),
-    students: course.students.map(mapStudentToDTO),
+    teacher: course.teacher?.id ? mapTeacherToDTO(course.teacher) : null,
+    students:
+      course.students?.length > 0 ? course.students.map(mapStudentToDTO) : [],
   };
 }

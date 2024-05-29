@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CourseRequestSchema } from "../../schemas/CourseRequestSchema";
 import { Course } from "../../../domain/models";
 
-export default class CourseValidationService {
+export default class CourseSchemaService {
   static async validateCourseCreate(
     req: Request,
     res: Response,

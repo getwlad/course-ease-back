@@ -1,5 +1,6 @@
 import { User } from "../../../domain/models";
 import { UserRepository } from "../../../domain/repositories/UserRepository";
+import { RegisterValidationService } from "../../../domain/services/RegisterValidationService";
 import { UserRequestDTO } from "../../dto/user/UserRequestDTO";
 import {
   UserResponseDTO,
@@ -8,9 +9,11 @@ import {
 
 export class UserService {
   private userRepository: UserRepository;
+  private registerValidationService: RegisterValidationService;
 
   constructor() {
     this.userRepository = new UserRepository();
+    this.registerValidationService = new RegisterValidationService();
   }
 
   async getAllUsers(): Promise<UserResponseDTO[]> {
@@ -32,6 +35,9 @@ export class UserService {
 
   async createUser(userData: Partial<User>): Promise<UserResponseDTO> {
     userData.active = true;
+    await this.registerValidationService.validateUsernameRegistered(
+      userData.username!
+    );
     return this.convertToDTO(await this.userRepository.create(userData));
   }
 

@@ -1,15 +1,34 @@
-import { Teacher } from "../models";
+import { Course, Teacher } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
 import { Person } from "../models";
 
 export class TeacherRepository {
   async findAll(): Promise<Teacher[]> {
-    return Teacher.findAll();
+    return Teacher.findAll({
+      nest: true,
+      include: [
+        {
+          model: Person,
+          as: "person",
+        },
+      ],
+    });
   }
 
   async findById(id: number): Promise<Teacher> {
-    const teacher = await Teacher.findByPk(id);
-
+    const teacher = await Teacher.findByPk(id, {
+      nest: true,
+      include: [
+        {
+          model: Person,
+          as: "person",
+        },
+        {
+          model: Course,
+          as: "course",
+        },
+      ],
+    });
     if (!teacher) {
       throw new Error(`Professor com id: ${id} não encontrado.`);
     }
@@ -24,7 +43,6 @@ export class TeacherRepository {
     let transaction;
     try {
       transaction = await sequelize.transaction();
-
       const person = await Person.create(personData, { transaction });
 
       teacherData.personId = person.id;
@@ -33,7 +51,7 @@ export class TeacherRepository {
 
       await transaction.commit();
 
-      return teacher;
+      return this.reloadModel(teacher);
     } catch (error) {
       if (transaction) await transaction.rollback();
       throw error;
@@ -42,7 +60,7 @@ export class TeacherRepository {
 
   async update(teacher: Teacher): Promise<Teacher> {
     await teacher.save();
-    return teacher;
+    return this.reloadModel(teacher);
   }
 
   async delete(teacher: Teacher): Promise<void> {
@@ -59,5 +77,20 @@ export class TeacherRepository {
       if (transaction) await transaction.rollback();
       throw error;
     }
+  }
+
+  async reloadModel(teacher: Teacher) {
+    return await teacher.reload({
+      include: [
+        {
+          model: Person,
+          as: "person",
+        },
+        {
+          model: Course,
+          as: "course",
+        },
+      ],
+    });
   }
 }

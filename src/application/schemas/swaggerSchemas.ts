@@ -186,10 +186,22 @@
  *         email:
  *           type: string
  *           example: "johndoe@example.com"
+ *         phone:
+ *           type: string
+ *           example: "54123456789"
+ *         gender:
+ *           type: string
+ *           enum:
+ *              - masculino
+ *              - feminino
+ *              - outros
+ *           example: "masculino"
  *       required:
  *         - name
  *         - birthDate
  *         - email
+ *         - phone
+ *         - gender
  *
  *     PersonResponse:
  *       type: object
