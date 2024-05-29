@@ -30,6 +30,7 @@ class App {
     try {
       await db.authenticate();
       console.log("Conexão com o banco de dados realizada com sucesso");
+      await db.sync();
     } catch (err: any) {
       console.log("Não foi possível conectar ao banco de dados: ", err.message);
     }
