@@ -1,5 +1,5 @@
-import { Person } from "../../domain/models/Person";
-import { PersonRepository } from "../../domain/repositories/PersonRepository";
+import { Person } from "../../../domain/models";
+import { PersonRepository } from "../../../domain/repositories/PersonRepository";
 
 export class PersonService {
   private personRepository: PersonRepository;

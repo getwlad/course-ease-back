@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
-import { Course } from "../../domain/models/Course";
-import { CourseService } from "../services/CourseService";
+import { Course } from "../../domain/models";
+import { CourseService } from "../services/course/CourseService";
+import { CourseRequestDTO } from "../dto/course/CourseRequestDTO";
+import { CourseDTO } from "../dto/course/CourseDTO";
+import { CourseResponseDTO } from "../dto/course/CourseResponseDTO";
 
 export class CourseController {
   private courseService: CourseService;
@@ -11,7 +14,7 @@ export class CourseController {
 
   async getAllCourses(req: Request, res: Response): Promise<void> {
     try {
-      const courses: Course[] = await this.courseService.getAllCourses();
+      const courses: CourseDTO[] = await this.courseService.getAllCourses();
       res.json(courses);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -21,7 +24,8 @@ export class CourseController {
   async getCourseById(req: Request, res: Response): Promise<void> {
     const id: number = parseInt(req.params.id);
     try {
-      const course: Course = await this.courseService.getCourseById(id);
+      const course: CourseResponseDTO =
+        await this.courseService.getCourseById(id);
       res.json(course);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -30,8 +34,9 @@ export class CourseController {
 
   async createCourse(req: Request, res: Response): Promise<void> {
     try {
-      const courseData: Partial<Course> = req.body;
-      const course: Course = await this.courseService.createCourse(courseData);
+      const courseData: CourseRequestDTO = req.body;
+      const course: CourseResponseDTO =
+        await this.courseService.createCourse(courseData);
       res.status(201).json(course);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -40,9 +45,12 @@ export class CourseController {
 
   async updateCourse(req: Request, res: Response): Promise<void> {
     try {
-      const course: Course = req.body;
-      const updatedCourse: Course =
-        await this.courseService.updateCourse(course);
+      const id: number = parseInt(req.params.id);
+      const course: CourseRequestDTO = req.body;
+      const updatedCourse: CourseDTO = await this.courseService.updateCourse(
+        id,
+        course
+      );
       res.json(updatedCourse);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -52,11 +60,8 @@ export class CourseController {
   async softDeleteCourse(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);
-      const course: Course = await this.courseService.getCourseById(id);
-      course.active = false;
-      const softDeletedCourse: Course =
-        await this.courseService.softDeleteCourse(course);
-      res.json(softDeletedCourse);
+      await this.courseService.softDeleteCourse(id);
+      res.status(204);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

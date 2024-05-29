@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { CourseController } from "../../../application/controllers/CourseController,";
+import CourseValidationService from "../../../application/services/course/CourseValidationService";
 
 const router = Router();
 const courseController = new CourseController();
@@ -9,10 +10,16 @@ const courseController = new CourseController();
  * /course:
  *   get:
  *     tags: [Course]
- *     description: Retorna todos os cursos.
+ *     summary: Retorna todos os cursos.
  *     responses:
  *       200:
  *         description: Lista de todos os cursos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/CourseResponse'
  */
 router.get("/", courseController.getAllCourses.bind(courseController));
 
@@ -21,7 +28,7 @@ router.get("/", courseController.getAllCourses.bind(courseController));
  * /course/{id}:
  *   get:
  *     tags: [Course]
- *     description: Retorna um curso específico pelo ID.
+ *     summary: Retorna um curso específico pelo ID.
  *     parameters:
  *       - in: path
  *         name: id
@@ -32,6 +39,10 @@ router.get("/", courseController.getAllCourses.bind(courseController));
  *     responses:
  *       200:
  *         description: Curso retornado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseFullResponse'
  *       404:
  *         description: Curso não encontrado.
  */
@@ -42,19 +53,33 @@ router.get("/:id", courseController.getCourseById.bind(courseController));
  * /course:
  *   post:
  *     tags: [Course]
- *     description: Cria um novo curso.
+ *     summary: Cria um novo curso.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CourseRequest'
  *     responses:
  *       200:
  *         description: Curso criado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseFullResponse'
  */
-router.post("/", courseController.createCourse.bind(courseController));
+router.post(
+  "/",
+  CourseValidationService.validateCourseCreate,
+  courseController.createCourse.bind(courseController)
+);
 
 /**
  * @swagger
  * /course/{id}:
  *   put:
  *     tags: [Course]
- *     description: Atualiza as informações de um curso existente.
+ *     summary: Atualiza as informações de um curso existente.
  *     parameters:
  *       - in: path
  *         name: id
@@ -62,20 +87,34 @@ router.post("/", courseController.createCourse.bind(courseController));
  *         description: ID do curso a ser atualizado.
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CourseRequest'
  *     responses:
  *       200:
  *         description: Curso atualizado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseFullResponse'
  *       404:
  *         description: Curso não encontrado.
  */
-router.put("/:id", courseController.updateCourse.bind(courseController));
+router.put(
+  "/:id",
+  CourseValidationService.validateCourseCreate,
+  courseController.updateCourse.bind(courseController)
+);
 
 /**
  * @swagger
  * /course/{id}:
  *   delete:
  *     tags: [Course]
- *     description: Exclui suavemente um curso.
+ *     summary: Exclui suavemente um curso.
  *     parameters:
  *       - in: path
  *         name: id

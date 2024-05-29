@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../../../application/controllers/UserController";
+import UserValidationService from "../../../application/services/user/UserValidationService";
 
 const router = Router();
 const userController = new UserController();
@@ -9,10 +10,16 @@ const userController = new UserController();
  * /user:
  *   get:
  *     tags: [User]
- *     description: Retorna todos os usuários.
+ *     summary: Retorna todos os usuários.
  *     responses:
  *       200:
  *         description: Lista de todos os usuários.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserResponse'
  */
 router.get("/", userController.getAllUsers.bind(userController));
 
@@ -21,7 +28,7 @@ router.get("/", userController.getAllUsers.bind(userController));
  * /user/{id}:
  *   get:
  *     tags: [User]
- *     description: Retorna um usuário específico pelo ID.
+ *     summary: Retorna um usuário específico pelo ID.
  *     parameters:
  *       - in: path
  *         name: id
@@ -32,6 +39,10 @@ router.get("/", userController.getAllUsers.bind(userController));
  *     responses:
  *       200:
  *         description: Usuário retornado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserResponse'
  *       404:
  *         description: Usuário não encontrado.
  */
@@ -42,19 +53,33 @@ router.get("/:id", userController.getUserById.bind(userController));
  * /user:
  *   post:
  *     tags: [User]
- *     description: Cria um novo usuário.
+ *     summary: Cria um novo usuário.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserRequest'
  *     responses:
  *       200:
  *         description: Usuário criado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserResponse'
  */
-router.post("/", userController.createUser.bind(userController));
+router.post(
+  "/",
+  UserValidationService.validateUserCreate,
+  userController.createUser.bind(userController)
+);
 
 /**
  * @swagger
  * /user/{id}:
  *   put:
  *     tags: [User]
- *     description: Atualiza as informações de um usuário existente.
+ *     summary: Atualiza as informações de um usuário existente.
  *     parameters:
  *       - in: path
  *         name: id
@@ -62,20 +87,34 @@ router.post("/", userController.createUser.bind(userController));
  *         description: ID do usuário a ser atualizado.
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserRequest'
  *     responses:
  *       200:
  *         description: Usuário atualizado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserResponse'
  *       404:
  *         description: Usuário não encontrado.
  */
-router.put("/:id", userController.updateUser.bind(userController));
+router.put(
+  "/:id",
+  UserValidationService.validateUserCreate,
+  userController.updateUser.bind(userController)
+);
 
 /**
  * @swagger
  * /user/{id}:
  *   delete:
  *     tags: [User]
- *     description: Exclui suavemente um usuário.
+ *     summary: Exclui suavemente um usuário.
  *     parameters:
  *       - in: path
  *         name: id

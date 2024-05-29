@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import { User } from "../../domain/models/User";
-import { UserService } from "../services/UserService";
+import { UserService } from "../services/user/UserService";
+import { UserResponseDTO } from "../dto/user/UserResponseDTO";
+import { UserRequestDTO } from "../dto/user/UserRequestDTO";
 
 export class UserController {
   private userService: UserService;
@@ -11,7 +12,7 @@ export class UserController {
 
   async getAllUsers(req: Request, res: Response): Promise<void> {
     try {
-      const users: User[] = await this.userService.getAllUsers();
+      const users: UserResponseDTO[] = await this.userService.getAllUsers();
       res.json(users);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -21,7 +22,7 @@ export class UserController {
   async getUserById(req: Request, res: Response): Promise<void> {
     const id: number = parseInt(req.params.id);
     try {
-      const user: User = await this.userService.getUserById(id);
+      const user: UserResponseDTO = await this.userService.getUserById(id);
       res.json(user);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -30,8 +31,8 @@ export class UserController {
 
   async createUser(req: Request, res: Response): Promise<void> {
     try {
-      const userData: Partial<User> = req.body;
-      const user: User = await this.userService.createUser(userData);
+      const userData: UserRequestDTO = req.body;
+      const user: UserResponseDTO = await this.userService.createUser(userData);
       res.status(201).json(user);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -40,8 +41,12 @@ export class UserController {
 
   async updateUser(req: Request, res: Response): Promise<void> {
     try {
-      const user: User = req.body;
-      const updatedUser: User = await this.userService.updateUser(user);
+      const id: number = parseInt(req.params.id);
+      const user: UserRequestDTO = req.body;
+      const updatedUser: UserResponseDTO = await this.userService.updateUser(
+        id,
+        user
+      );
       res.json(updatedUser);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -51,10 +56,8 @@ export class UserController {
   async softDeleteUser(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);
-      const user: User = await this.userService.getUserById(id);
-      user.active = false;
-      const softDeletedUser: User = await this.userService.softDeleteUser(user);
-      res.json(softDeletedUser);
+      await this.userService.softDeleteUser(id);
+      res.status(204);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { StudentController } from "../../../application/controllers/StudentController";
+import StudentValidationService from "../../../application/services/student/StudentValidationService";
 
 const router = Router();
 const studentController = new StudentController();
@@ -9,10 +10,16 @@ const studentController = new StudentController();
  * /student:
  *   get:
  *     tags: [Student]
- *     description: Retorna todos os estudantes.
+ *     summary: Retorna todos os estudantes.
  *     responses:
  *       200:
  *         description: Lista de todos os estudantes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/StudentResponse'
  */
 router.get("/", studentController.getAllStudents.bind(studentController));
 
@@ -21,7 +28,7 @@ router.get("/", studentController.getAllStudents.bind(studentController));
  * /student/{id}:
  *   get:
  *     tags: [Student]
- *     description: Retorna um estudante específico pelo ID.
+ *     summary: Retorna um estudante específico pelo ID.
  *     parameters:
  *       - in: path
  *         name: id
@@ -32,6 +39,10 @@ router.get("/", studentController.getAllStudents.bind(studentController));
  *     responses:
  *       200:
  *         description: Estudante retornado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/StudentFullResponse'
  *       404:
  *         description: Estudante não encontrado.
  */
@@ -42,19 +53,33 @@ router.get("/:id", studentController.getStudentById.bind(studentController));
  * /student:
  *   post:
  *     tags: [Student]
- *     description: Cria um novo estudante.
+ *     summary: Cria um novo estudante.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/StudentRequest'
  *     responses:
  *       200:
  *         description: Estudante criado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/StudentFullResponse'
  */
-router.post("/", studentController.createStudent.bind(studentController));
+router.post(
+  "/",
+  StudentValidationService.validateStudentCreate,
+  studentController.createStudent.bind(studentController)
+);
 
 /**
  * @swagger
  * /student/{id}:
  *   put:
  *     tags: [Student]
- *     description: Atualiza as informações de um estudante existente.
+ *     summary: Atualiza as informações de um estudante existente.
  *     parameters:
  *       - in: path
  *         name: id
@@ -62,20 +87,34 @@ router.post("/", studentController.createStudent.bind(studentController));
  *         description: ID do estudante a ser atualizado.
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/StudentRequest'
  *     responses:
  *       200:
  *         description: Estudante atualizado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/StudentFullResponse'
  *       404:
  *         description: Estudante não encontrado.
  */
-router.put("/:id", studentController.updateStudent.bind(studentController));
+router.put(
+  "/:id",
+  StudentValidationService.validateStudentCreate,
+  studentController.updateStudent.bind(studentController)
+);
 
 /**
  * @swagger
  * /student/{id}:
  *   delete:
  *     tags: [Student]
- *     description: Exclui permanentemente um estudante.
+ *     summary: Exclui permanentemente um estudante.
  *     parameters:
  *       - in: path
  *         name: id

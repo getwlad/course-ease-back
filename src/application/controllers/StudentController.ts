@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { Person } from "../../domain/models/Person";
-import { Student } from "../../domain/models/Student";
-import { StudentService } from "../services/StudentService";
+import { StudentService } from "../services/student/StudentService";
+import { StudentDTO } from "../dto/student/StudentDTO";
+import { StudentResponseDTO } from "../dto/student/StudentResponseDTO";
+import { StudentRequestDTO } from "../dto/student/StudentRequestDTO";
 
 export class StudentController {
   private studentService: StudentService;
@@ -12,7 +13,7 @@ export class StudentController {
 
   async getAllStudents(req: Request, res: Response): Promise<void> {
     try {
-      const students: Student[] = await this.studentService.getAllStudents();
+      const students: StudentDTO[] = await this.studentService.getAllStudents();
       res.json(students);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -22,7 +23,8 @@ export class StudentController {
   async getStudentById(req: Request, res: Response): Promise<void> {
     const id: number = parseInt(req.params.id);
     try {
-      const student: Student = await this.studentService.getStudentById(id);
+      const student: StudentResponseDTO =
+        await this.studentService.getStudentById(id);
       res.json(student);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -31,12 +33,9 @@ export class StudentController {
 
   async createStudent(req: Request, res: Response): Promise<void> {
     try {
-      const studentData: Partial<Student> = req.body.studentData;
-      const personData: Partial<Person> = req.body.personData;
-      const student: Student = await this.studentService.createStudent(
-        studentData,
-        personData
-      );
+      const studentData: StudentRequestDTO = req.body.studentData;
+      const student: StudentResponseDTO =
+        await this.studentService.createStudent(studentData);
       res.status(201).json(student);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -45,9 +44,10 @@ export class StudentController {
 
   async updateStudent(req: Request, res: Response): Promise<void> {
     try {
-      const student: Student = req.body;
-      const updatedStudent: Student =
-        await this.studentService.updateStudent(student);
+      const id: number = parseInt(req.params.id);
+      const student: StudentRequestDTO = req.body;
+      const updatedStudent: StudentResponseDTO =
+        await this.studentService.updateStudent(id, student);
       res.json(updatedStudent);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
@@ -57,8 +57,7 @@ export class StudentController {
   async deleteStudent(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);
-      const student: Student = await this.studentService.getStudentById(id);
-      await this.studentService.deleteStudent(student);
+      await this.studentService.deleteStudent(id);
       res.sendStatus(204);
     } catch (error: any) {
       res.status(500).json({ message: error.message });

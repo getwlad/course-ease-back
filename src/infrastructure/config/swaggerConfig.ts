@@ -1,6 +1,5 @@
-// src/config/swaggerConfig.ts
 import { SwaggerDefinition, Options } from "swagger-jsdoc";
-
+import "./../../application/schemas/swaggerSchemas";
 const swaggerDefinition: SwaggerDefinition = {
   openapi: "3.0.0",
   info: {
@@ -18,7 +17,10 @@ const swaggerDefinition: SwaggerDefinition = {
 
 const options: Options = {
   swaggerDefinition,
-  apis: ["./src/interfaces/http/routes/*.ts"],
+  apis: [
+    "./src/application/schemas/swaggerSchemas.ts",
+    "./src/interfaces/http/routes/*.ts",
+  ],
 };
 
 export default options;

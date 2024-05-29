@@ -5,14 +5,8 @@ export class CourseRepository {
     return Course.findAll();
   }
 
-  async findById(id: number): Promise<Course> {
-    const course = await Course.findByPk(id);
-
-    if (!course) {
-      throw new Error(`Curso com id: ${id} não encontrado.`);
-    }
-
-    return course;
+  async findById(id: number): Promise<Course | null> {
+    return await Course.findByPk(id);
   }
 
   async create(courseData: Partial<Course>): Promise<Course> {

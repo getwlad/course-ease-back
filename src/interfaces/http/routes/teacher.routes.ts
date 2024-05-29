@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { TeacherController } from "../../../application/controllers/TeacherController";
+import TeacherValidationService from "../../../application/services/teacher/TeacherValidationService";
 
 const router = Router();
 const teacherController = new TeacherController();
@@ -9,10 +10,16 @@ const teacherController = new TeacherController();
  * /teacher:
  *   get:
  *     tags: [Teacher]
- *     description: Retorna todos os professores.
+ *     summary: Retorna todos os professores.
  *     responses:
  *       200:
  *         description: Lista de todos os professores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/TeacherResponse'
  */
 router.get("/", teacherController.getAllTeachers.bind(teacherController));
 
@@ -21,7 +28,7 @@ router.get("/", teacherController.getAllTeachers.bind(teacherController));
  * /teacher/{id}:
  *   get:
  *     tags: [Teacher]
- *     description: Retorna um professor específico pelo ID.
+ *     summary: Retorna um professor específico pelo ID.
  *     parameters:
  *       - in: path
  *         name: id
@@ -32,6 +39,10 @@ router.get("/", teacherController.getAllTeachers.bind(teacherController));
  *     responses:
  *       200:
  *         description: Professor retornado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TeacherFullResponse'
  *       404:
  *         description: Professor não encontrado.
  */
@@ -42,19 +53,33 @@ router.get("/:id", teacherController.getTeacherById.bind(teacherController));
  * /teacher:
  *   post:
  *     tags: [Teacher]
- *     description: Cria um novo professor.
+ *     summary: Cria um novo professor.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TeacherRequest'
  *     responses:
  *       200:
  *         description: Professor criado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TeacherFullResponse'
  */
-router.post("/", teacherController.createTeacher.bind(teacherController));
+router.post(
+  "/",
+  TeacherValidationService.validateTeacherCreate,
+  teacherController.createTeacher.bind(teacherController)
+);
 
 /**
  * @swagger
  * /teacher/{id}:
  *   put:
  *     tags: [Teacher]
- *     description: Atualiza as informações de um professor existente.
+ *     summary: Atualiza as informações de um professor existente.
  *     parameters:
  *       - in: path
  *         name: id
@@ -62,20 +87,34 @@ router.post("/", teacherController.createTeacher.bind(teacherController));
  *         description: ID do professor a ser atualizado.
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/TeacherRequest'
  *     responses:
  *       200:
  *         description: Professor atualizado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/TeacherFullResponse'
  *       404:
  *         description: Professor não encontrado.
  */
-router.put("/:id", teacherController.updateTeacher.bind(teacherController));
+router.put(
+  "/:id",
+  TeacherValidationService.validateTeacherCreate,
+  teacherController.updateTeacher.bind(teacherController)
+);
 
 /**
  * @swagger
  * /teacher/{id}:
  *   delete:
  *     tags: [Teacher]
- *     description: Exclui permanentemente um professor.
+ *     summary: Exclui permanentemente um professor.
  *     parameters:
  *       - in: path
  *         name: id

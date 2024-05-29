@@ -9,7 +9,7 @@ const router = Router();
  * @swagger
  * tags:
  *   name: Course
- *   description: Course operations
+ *   description: Controller de cursos
  */
 
 router.use("/course", courseRoutes);
@@ -18,7 +18,7 @@ router.use("/course", courseRoutes);
  * @swagger
  * tags:
  *   name: Student
- *   description: Student operations
+ *   description: Controller de estudantes
  */
 router.use("/student", studentRoutes);
 
@@ -26,7 +26,7 @@ router.use("/student", studentRoutes);
  * @swagger
  * tags:
  *   name: Teacher
- *   description: Teacher operations
+ *   description: Controller de professores
  */
 router.use("/teacher", teacherRoutes);
 
@@ -34,7 +34,7 @@ router.use("/teacher", teacherRoutes);
  * @swagger
  * tags:
  *   name: User
- *   description: User operations
+ *   description: Controller de usuário
  */
 router.use("/user", userRoutes);
 
