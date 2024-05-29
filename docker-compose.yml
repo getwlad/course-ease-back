@@ -1,0 +1,50 @@
+version: "3.8"
+
+networks:
+  docker-network:
+    driver: bridge
+
+volumes:
+  db:
+
+services:
+  db:
+    image: "postgres:16.3"
+    container_name: postgres-container
+    networks:
+      - docker-network
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: db@Courseease
+      PGPASSWORD: db@Courseease
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      retries: 3
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  api:
+    build: .
+    image: "api-courseease:0.1"
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - docker-network
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: db@Courseease
+      DB_NAME: postgres
+      DB_DIALECT: postgres
+      DB_PORT: 5432
+      DB_SCHEMA: "course_ease"
+    stdin_open: true
+    tty: true
