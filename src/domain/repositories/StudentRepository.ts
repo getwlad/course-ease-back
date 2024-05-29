@@ -1,5 +1,5 @@
-import { Student } from "../models/Student";
-import { Person } from "../models/Person";
+import { Student } from "../models";
+import { Person } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
 
 export class StudentRepository {

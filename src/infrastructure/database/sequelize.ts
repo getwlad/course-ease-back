@@ -1,21 +1,15 @@
-import { Sequelize } from "sequelize";
-import { User } from "../../domain/models/User";
-import { Course } from "../../domain/models/Course";
-import { Person } from "../../domain/models/Person";
-import { Teacher } from "../../domain/models/Teacher";
-import { Student } from "../../domain/models/Student";
-
+import { Sequelize } from "sequelize-typescript";
+import { User, Course, Person, Teacher, Student } from "../../domain/models";
 const config = require("./config/database.js");
-
 import "dotenv/config";
 
 class Database {
   public connection: Sequelize;
-
+  models = [User, Course, Person, Teacher, Student];
   constructor() {
     this.connection = new Sequelize({
       ...config,
-      models: [User, Course, Person, Teacher, Student],
+      models: this.models,
     });
   }
 }

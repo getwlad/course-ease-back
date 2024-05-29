@@ -1,4 +1,4 @@
-import { Course } from "../models/Course";
+import { Course } from "../models";
 
 export class CourseRepository {
   async findAll(): Promise<Course[]> {

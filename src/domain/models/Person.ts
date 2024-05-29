@@ -1,6 +1,6 @@
 import { Table, Column, Model, DataType, HasOne } from "sequelize-typescript";
-import { Teacher } from "./Teacher";
-import { Student } from "./Student";
+import { Teacher } from "./";
+import { Student } from "./";
 
 @Table({
   tableName: "Person",
@@ -8,7 +8,7 @@ import { Student } from "./Student";
   createdAt: "created_at",
   updatedAt: "updated_at",
 })
-export class Person extends Model {
+export default class Person extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,

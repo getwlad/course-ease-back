@@ -6,7 +6,7 @@ import { Table, Column, Model, DataType } from "sequelize-typescript";
   createdAt: "created_at",
   updatedAt: "updated_at",
 })
-export class User extends Model {
+export default class User extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,

@@ -5,9 +5,10 @@ import {
   DataType,
   BelongsTo,
   HasMany,
+  HasOne,
 } from "sequelize-typescript";
-import { Student } from "./Student";
-import { Teacher } from "./Teacher";
+import { Student } from "./";
+import { Teacher } from "./";
 
 @Table({
   tableName: "Course",
@@ -15,7 +16,7 @@ import { Teacher } from "./Teacher";
   createdAt: "created_at",
   updatedAt: "updated_at",
 })
-export class Course extends Model {
+export default class Course extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -47,7 +48,7 @@ export class Course extends Model {
   })
   description!: string;
 
-  @BelongsTo(() => Teacher)
+  @HasOne(() => Teacher)
   teacher!: Teacher;
 
   @HasMany(() => Student)

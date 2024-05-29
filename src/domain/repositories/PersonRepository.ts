@@ -1,4 +1,4 @@
-import { Person } from "../models/Person";
+import { Person } from "../models";
 
 export class PersonRepository {
   async update(person: Person): Promise<Person> {

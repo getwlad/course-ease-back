@@ -1,4 +1,5 @@
 import express, { Express, Request, Response, NextFunction } from "express";
+import "reflect-metadata";
 import db from "./infrastructure/database/sequelize";
 import swaggerUi from "swagger-ui-express";
 import swaggerJsdoc from "swagger-jsdoc";
@@ -31,6 +32,7 @@ class App {
       await db.authenticate();
       console.log("Conexão com o banco de dados realizada com sucesso");
       await db.sync();
+      console.log("Sincronização de modelos concluída com sucesso");
     } catch (err: any) {
       console.log("Não foi possível conectar ao banco de dados: ", err.message);
     }

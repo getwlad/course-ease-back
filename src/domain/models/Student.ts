@@ -6,8 +6,8 @@ import {
   ForeignKey,
   BelongsTo,
 } from "sequelize-typescript";
-import { Course } from "./Course";
-import { Person } from "./Person";
+import { Course } from "./";
+import { Person } from "./";
 
 @Table({
   tableName: "Student",
@@ -15,7 +15,7 @@ import { Person } from "./Person";
   createdAt: "created_at",
   updatedAt: "updated_at",
 })
-export class Student extends Model {
+export default class Student extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,

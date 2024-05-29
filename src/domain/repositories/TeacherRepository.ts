@@ -1,6 +1,6 @@
-import { Teacher } from "../models/Teacher";
+import { Teacher } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
-import { Person } from "../models/Person";
+import { Person } from "../models";
 
 export class TeacherRepository {
   async findAll(): Promise<Teacher[]> {
