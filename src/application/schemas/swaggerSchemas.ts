@@ -75,10 +75,7 @@
  *       properties:
  *         cpf:
  *           type: string
- *           example: "123.456.789-00"
- *         enrollment:
- *           type: string
- *           example: "20210001"
+ *           example: "12345678900"
  *         courseId:
  *           type: integer
  *           example: 1
@@ -86,7 +83,6 @@
  *           $ref: '#/components/schemas/PersonRequest'
  *       required:
  *         - cpf
- *         - enrollment
  *         - courseId
  *         - personData
  *
@@ -98,7 +94,7 @@
  *           example: 1
  *         cpf:
  *           type: string
- *           example: "123.456.789-00"
+ *           example: "12345678900"
  *         enrollment:
  *           type: string
  *           example: "20210001"
@@ -112,7 +108,7 @@
  *       properties:
  *         cpfCnpj:
  *           type: string
- *           example: "12.345.678/0001-00"
+ *           example: "12345678000100"
  *         specialization:
  *           type: string
  *           example: "Desenvolvimento Web"
@@ -139,7 +135,7 @@
  *           example: 1
  *         cpfCnpj:
  *           type: string
- *           example: "12.345.678/0001-00"
+ *           example: "12345678000100"
  *         specialization:
  *           type: string
  *           example: "Desenvolvimento Web"
@@ -159,7 +155,7 @@
  *           example: "john_doe"
  *         password:
  *           type: string
- *           example: "password123"
+ *           example: "Password@123"
  *       required:
  *         - username
  *         - password
