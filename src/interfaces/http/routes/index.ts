@@ -48,4 +48,8 @@ router.use("/student", authenticateToken, studentRoutes);
  */
 router.use("/teacher", authenticateToken, teacherRoutes);
 
+router.use((req, res, next) => {
+  res.redirect("/docs");
+});
+
 export default router;

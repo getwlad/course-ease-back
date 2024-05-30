@@ -83,6 +83,41 @@ router.post(
 
 /**
  * @swagger
+ * /course/{id}/student:
+ *   post:
+ *     tags: [Course]
+ *     summary: Adiciona estudantes a um curso.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID do curso.
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CourseAddStudentRequest'
+ *     responses:
+ *       200:
+ *         description: Estudantes adicionados com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseFullResponse'
+ */
+router.post(
+  "/:id/student",
+  CourseValidationService.validateCourseAddStudent,
+  courseController.addStudent.bind(courseController)
+);
+
+/**
+ * @swagger
  * /course/{id}:
  *   put:
  *     tags: [Course]
@@ -115,6 +150,40 @@ router.post(
 router.put(
   "/:id",
   CourseValidationService.validateCourseCreate,
+  courseController.updateCourse.bind(courseController)
+);
+
+/**
+ * @swagger
+ * /course/{id}/teacher/{teacherId}:
+ *   put:
+ *     tags: [Course]
+ *     summary: Atualiza as o professor de um curso existente.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID do curso a ser atualizado o professor.
+ *       - in: path
+ *         name: teacherId
+ *         required: true
+ *         description: ID do professor a ser atualizado no curso.
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Curso atualizado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseFullResponse'
+ *       404:
+ *         description: Curso não encontrado.
+ */
+router.put(
+  "/:id/teacher/:teacherId",
   courseController.updateCourse.bind(courseController)
 );
 

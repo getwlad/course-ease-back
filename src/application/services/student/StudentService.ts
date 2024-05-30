@@ -21,6 +21,10 @@ export class StudentService {
     this.courseValidationService = new CourseValidationService();
   }
 
+  getStudentRepository(): StudentRepository {
+    return this.studentRepository;
+  }
+
   async getAllStudents(): Promise<StudentDTO[]> {
     return (await this.studentRepository.findAll()).map(this.convertToDTO);
   }

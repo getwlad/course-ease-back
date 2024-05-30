@@ -1,3 +1,4 @@
+import { Transaction } from "sequelize";
 import { Course, Person, Student, Teacher } from "../models";
 
 export class CourseRepository {
@@ -19,8 +20,11 @@ export class CourseRepository {
     });
   }
 
-  async findById(id: number): Promise<Course | null> {
-    return await Course.findByPk(id, {
+  async findById(
+    id: number,
+    transaction?: Transaction
+  ): Promise<Course | null> {
+    const options = {
       nest: true,
       include: [
         {
@@ -44,7 +48,9 @@ export class CourseRepository {
           ],
         },
       ],
-    });
+      transaction,
+    };
+    return await Course.findByPk(id, options);
   }
 
   async create(courseData: Partial<Course>): Promise<Course> {
@@ -53,7 +59,7 @@ export class CourseRepository {
 
   async update(course: Course): Promise<Course> {
     await course.save();
-    return course;
+    return this.reloadModel(course);
   }
 
   async delete(course: Course): Promise<Course> {
@@ -64,7 +70,6 @@ export class CourseRepository {
 
   async reloadModel(course: Course) {
     return await course.reload({
-      raw: true,
       nest: true,
       include: [
         {

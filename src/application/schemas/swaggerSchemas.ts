@@ -45,6 +45,19 @@
  *         - active
  *         - description
  *
+ *     CourseAddStudentRequest:
+ *       type: object
+ *       properties:
+ *         properties:
+ *         studentIds:
+ *           type: array
+ *           items:
+ *             type: integer
+ *             example: 1
+ *             minimum: 1
+ *       required:
+ *         - studentIds
+ *
  *     CourseFullResponse:
  *       type: object
  *       properties:

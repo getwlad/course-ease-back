@@ -1,6 +1,7 @@
 import { Course, Student, Teacher } from "../models";
 import { Person } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
+import { Transaction } from "sequelize";
 
 export class StudentRepository {
   async findAll(): Promise<Student[]> {
@@ -15,8 +16,11 @@ export class StudentRepository {
     });
   }
 
-  async findById(id: number): Promise<Student> {
-    const student = await Student.findByPk(id, {
+  async findById(
+    id: number,
+    transaction?: Transaction
+  ): Promise<Student | null> {
+    const options = {
       nest: true,
       include: [
         {
@@ -40,13 +44,9 @@ export class StudentRepository {
           ],
         },
       ],
-    });
-
-    if (!student) {
-      throw new Error(`Estudante com id: ${id} não encontrado.`);
-    }
-
-    return student;
+      transaction,
+    };
+    return await Student.findByPk(id, options);
   }
 
   async create(
@@ -74,8 +74,12 @@ export class StudentRepository {
     }
   }
 
-  async update(student: Student): Promise<Student> {
-    await student.save();
+  async update(student: Student, transaction?: Transaction): Promise<Student> {
+    const options = { transaction };
+    if (transaction) {
+      return await student.save(options);
+    }
+    await student.save(options);
     return this.reloadModel(student);
   }
 

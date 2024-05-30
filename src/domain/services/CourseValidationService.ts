@@ -1,11 +1,15 @@
-import { CourseService } from "../../application/services/course/CourseService";
+import { Course } from "../models";
+import { CourseRepository } from "../repositories/CourseRepository";
 
 export class CourseValidationService {
-  private courseService: CourseService;
+  private courseRepository: CourseRepository;
   constructor() {
-    this.courseService = new CourseService();
+    this.courseRepository = new CourseRepository();
   }
   async findCourseOrThrowEx(id: number): Promise<void> {
-    await this.courseService.findCourseById(id);
+    const course: Course | null = await this.courseRepository.findById(id);
+    if (!course) {
+      throw new Error(`Curso com id: ${id} não encontrado.`);
+    }
   }
 }

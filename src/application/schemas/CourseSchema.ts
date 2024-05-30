@@ -17,3 +17,18 @@ export const CourseRequestSchema = yup.object().shape({
     .max(255, "A descrição deve ter no máximo 255 caracteres")
     .required("A descrição é obrigatória"),
 });
+
+export const CourseAddStudentSchema = yup.object().shape({
+  studentIds: yup
+    .array()
+    .of(
+      yup
+        .number()
+        .typeError("IDs dos estudantes devem ser números")
+        .positive("IDs dos estudantes devem ser números positivos")
+        .integer("IDs dos estudantes devem ser números inteiros")
+        .required("ID do estudante é obrigatório")
+    )
+    .min(1, "Deve haver pelo menos um ID de estudante")
+    .required("A lista de IDs de estudantes é obrigatória"),
+});

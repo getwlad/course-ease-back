@@ -4,6 +4,10 @@ import { CourseService } from "../services/course/CourseService";
 import { CourseRequestDTO } from "../dto/course/CourseRequestDTO";
 import { CourseDTO } from "../dto/course/CourseDTO";
 import { CourseResponseDTO } from "../dto/course/CourseResponseDTO";
+import {
+  CourseAddStudentReqDTO,
+  CourseAddStudentResDTO,
+} from "../dto/course/CourseAddStudentReqDTO";
 
 export class CourseController {
   private courseService: CourseService;
@@ -62,6 +66,31 @@ export class CourseController {
       const id: number = parseInt(req.params.id);
       await this.courseService.softDeleteCourse(id);
       res.status(204);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async updateTeacher(req: Request, res: Response): Promise<void> {
+    try {
+      const id: number = parseInt(req.params.id);
+      const teacherId: number = parseInt(req.params.teacherId);
+      const updatedCourse: CourseDTO = await this.courseService.updateTeacher(
+        id,
+        teacherId
+      );
+      res.json(updatedCourse);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  async addStudent(req: Request, res: Response): Promise<void> {
+    try {
+      const id: number = parseInt(req.params.id);
+      const studentsId: CourseAddStudentReqDTO = req.body;
+      const response: CourseAddStudentResDTO =
+        await this.courseService.addStudents(id, studentsId);
+      res.json(response);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
