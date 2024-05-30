@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
-import { StudentRequestSchema } from "../../schemas/StudentRequestSchema";
+import {
+  StudentRequestSchema,
+  StudentUpdateSchema,
+} from "../../schemas/StudentSchema";
 
 export default class StudentSchemaService {
   static async validateStudentCreate(
@@ -10,6 +13,19 @@ export default class StudentSchemaService {
     const studentData = req.body;
     try {
       await StudentRequestSchema.validate(studentData, { abortEarly: false });
+      next();
+    } catch (error: any) {
+      res.status(400).json({ message: error.errors });
+    }
+  }
+  static async validateStudentUpdate(
+    req: Request,
+    res: Response,
+    next: Function
+  ) {
+    const studentData = req.body;
+    try {
+      await StudentUpdateSchema.validate(studentData, { abortEarly: false });
       next();
     } catch (error: any) {
       res.status(400).json({ message: error.errors });

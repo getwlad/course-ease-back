@@ -3,6 +3,7 @@ import { TeacherService } from "../services/teacher/TeacherService";
 import { TeacherDTO } from "../dto/teacher/TeacherDTO";
 import { TeacherResponseDTO } from "../dto/teacher/TeacherResponseDTO";
 import { TeacherRequestDTO } from "../dto/teacher/TeacherRequestDTO";
+import { TeacherUpdateDTO } from "../dto/teacher/TeacherUpdateDTO";
 
 export class TeacherController {
   private teacherService: TeacherService;
@@ -45,7 +46,7 @@ export class TeacherController {
   async updateTeacher(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);
-      const teacher: TeacherRequestDTO = req.body;
+      const teacher: TeacherUpdateDTO = req.body;
       const updatedTeacher: TeacherResponseDTO =
         await this.teacherService.updateTeacher(id, teacher);
       res.json(updatedTeacher);

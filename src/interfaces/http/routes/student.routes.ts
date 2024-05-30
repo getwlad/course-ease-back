@@ -100,7 +100,7 @@ router.post(
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/StudentRequest'
+ *             $ref: '#/components/schemas/StudentUpdate'
  *     responses:
  *       200:
  *         description: Estudante atualizado com sucesso.
@@ -113,7 +113,7 @@ router.post(
  */
 router.put(
   "/:id",
-  StudentValidationService.validateStudentCreate,
+  StudentValidationService.validateStudentUpdate,
   studentController.updateStudent.bind(studentController)
 );
 

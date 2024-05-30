@@ -100,7 +100,7 @@ router.post(
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/TeacherRequest'
+ *             $ref: '#/components/schemas/TeacherUpdate'
  *     responses:
  *       200:
  *         description: Professor atualizado com sucesso.
@@ -113,7 +113,7 @@ router.post(
  */
 router.put(
   "/:id",
-  TeacherValidationService.validateTeacherCreate,
+  TeacherValidationService.validateTeacherUpdate,
   teacherController.updateTeacher.bind(teacherController)
 );
 

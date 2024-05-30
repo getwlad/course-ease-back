@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CourseRequestSchema } from "../../schemas/CourseRequestSchema";
+import { CourseRequestSchema } from "../../schemas/CourseSchema";
 import { Course } from "../../../domain/models";
 
 export default class CourseSchemaService {

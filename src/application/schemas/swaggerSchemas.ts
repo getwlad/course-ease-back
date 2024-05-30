@@ -86,6 +86,14 @@
  *         - courseId
  *         - personData
  *
+ *     StudentUpdate:
+ *       type: object
+ *       properties:
+ *         personData:
+ *           $ref: '#/components/schemas/PersonRequest'
+ *       required:
+ *         - personData
+ *
  *     StudentFullResponse:
  *       type: object
  *       properties:
@@ -125,6 +133,22 @@
  *         - specialization
  *         - experienceYears
  *         - courseId
+ *         - personData
+ *
+ *     TeacherUpdate:
+ *       type: object
+ *       properties:
+ *         specialization:
+ *           type: string
+ *           example: "Desenvolvimento Web"
+ *         experienceYears:
+ *           type: integer
+ *           example: 10
+ *         personData:
+ *           $ref: '#/components/schemas/PersonRequest'
+ *       required:
+ *         - specialization
+ *         - experienceYears
  *         - personData
  *
  *     TeacherFullResponse:

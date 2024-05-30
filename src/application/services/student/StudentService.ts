@@ -8,13 +8,17 @@ import {
   StudentResponseDTO,
   mapStudentToResponseDTO,
 } from "../../dto/student/StudentResponseDTO";
+import { CourseValidationService } from "../../../domain/services/CourseValidationService";
+import { StudentUpdateDTO } from "../../dto/student/StudentUpdateDTO";
 
 export class StudentService {
   private studentRepository: StudentRepository;
   private studentValidation: StudentValidationService;
+  private courseValidationService: CourseValidationService;
   constructor() {
     this.studentRepository = new StudentRepository();
     this.studentValidation = new StudentValidationService();
+    this.courseValidationService = new CourseValidationService();
   }
 
   async getAllStudents(): Promise<StudentDTO[]> {
@@ -44,6 +48,12 @@ export class StudentService {
       enrollment = uuidv4();
     }
 
+    if (studentData.courseId) {
+      await this.courseValidationService.findCourseOrThrowEx(
+        studentData.courseId
+      );
+    }
+
     return this.convertToRespDTO(
       await this.studentRepository.create(
         studentData,
@@ -55,9 +65,10 @@ export class StudentService {
 
   async updateStudent(
     id: number,
-    studentData: StudentRequestDTO
+    studentData: StudentUpdateDTO
   ): Promise<StudentResponseDTO> {
     const student: Student = await this.findStudentById(id);
+
     Object.assign(student, studentData);
     Object.assign(student.person, studentData.personData);
     return this.convertToRespDTO(await this.studentRepository.update(student));

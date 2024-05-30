@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserRequestSchema } from "../../schemas/UserRequestSchema";
+import { UserRequestSchema } from "../../schemas/UserSchema";
 
 export default class UserSchemaService {
   static async validateUserCreate(req: Request, res: Response, next: Function) {

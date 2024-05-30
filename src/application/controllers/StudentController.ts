@@ -3,6 +3,7 @@ import { StudentService } from "../services/student/StudentService";
 import { StudentDTO } from "../dto/student/StudentDTO";
 import { StudentResponseDTO } from "../dto/student/StudentResponseDTO";
 import { StudentRequestDTO } from "../dto/student/StudentRequestDTO";
+import { StudentUpdateDTO } from "../dto/student/StudentUpdateDTO";
 
 export class StudentController {
   private studentService: StudentService;
@@ -45,7 +46,7 @@ export class StudentController {
   async updateStudent(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);
-      const student: StudentRequestDTO = req.body;
+      const student: StudentUpdateDTO = req.body;
       const updatedStudent: StudentResponseDTO =
         await this.studentService.updateStudent(id, student);
       res.json(updatedStudent);
