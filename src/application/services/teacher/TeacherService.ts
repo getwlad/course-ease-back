@@ -55,6 +55,10 @@ export class TeacherService {
 
     Object.assign(teacher, teacherData);
     Object.assign(teacher.person, teacherData.personData);
+    return this.update(teacher);
+  }
+
+  async update(teacher: Teacher): Promise<TeacherResponseDTO> {
     return this.convertToRespDTO(await this.teacherRepository.update(teacher));
   }
 

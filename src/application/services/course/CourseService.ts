@@ -2,9 +2,9 @@ import { Transaction } from "sequelize";
 import { Course, Student, Teacher } from "../../../domain/models";
 import { CourseRepository } from "../../../domain/repositories/CourseRepository";
 import {
-  CourseAddStudentReqDTO,
-  CourseAddStudentResDTO,
-} from "../../dto/course/CourseAddStudentReqDTO";
+  CourseChangeStudentResDTO,
+  CourseChangeStudentReqDTO,
+} from "../../dto/course/CourseChangeStudentDTO";
 import { CourseDTO, mapCourseToDTO } from "../../dto/course/CourseDTO";
 import { CourseRequestDTO } from "../../dto/course/CourseRequestDTO";
 import sequelize from "../../../infrastructure/database/sequelize";
@@ -70,45 +70,59 @@ export class CourseService {
     const course: Course = await this.findCourseById(id);
     const teacher: Teacher =
       await this.teacherService.findTeacherById(teacherId);
-    course.teacher = teacher;
+    if (teacher.course != null) {
+      throw new Error("O professor já está registrado em um curso.");
+    }
+    teacher.courseId = course.id;
+    await this.teacherService.update(teacher);
     return this.convertToDTO(await this.courseRepository.update(course));
   }
 
-  async addStudents(
-    id: number,
-    students: CourseAddStudentReqDTO
-  ): Promise<CourseAddStudentResDTO> {
-    const addedStudents: number[] = [];
-    const notAddedStudents: number[] = [];
+  async removeTeacher(id: number): Promise<CourseDTO> {
     const course: Course = await this.findCourseById(id);
+    if (course.teacher == null) {
+      throw new Error("O curso não tem um professor registrado");
+    }
+    course.teacher.courseId = null;
+    await this.teacherService.update(course.teacher);
+    return this.convertToDTO(await this.courseRepository.update(course));
+  }
+
+  async changeStudents(
+    id: number,
+    { studentIds }: CourseChangeStudentReqDTO,
+    del: boolean
+  ): Promise<CourseChangeStudentResDTO> {
+    const success: number[] = [];
+    const failed: number[] = [];
+    const course: Course = await this.findCourseById(id);
+
     const transaction: Transaction = await sequelize.transaction();
     try {
-      for (const studentId of students.studentIds) {
-        const student: Student | null = await this.studentService
-          .getStudentRepository()
-          .findById(studentId, transaction);
+      const studentRepository = this.studentService.getStudentRepository();
 
-        if (!student || student?.courseId != null) {
-          notAddedStudents.push(studentId);
-          continue;
-        }
+      await Promise.all(
+        studentIds.map((studentId) =>
+          this.processStudent(
+            studentId,
+            id,
+            del,
+            studentRepository,
+            success,
+            failed,
+            transaction
+          )
+        )
+      );
 
-        student.courseId = id;
-        await this.studentService
-          .getStudentRepository()
-          .update(student, transaction);
-
-        addedStudents.push(studentId);
-      }
       await transaction.commit();
-
       await this.courseRepository.update(course);
 
       return {
         courseId: course.id,
         course: course.name,
-        addedStudents,
-        notAddedStudents,
+        success,
+        failed,
       };
     } catch (error) {
       if (transaction) await transaction.rollback();
@@ -121,5 +135,39 @@ export class CourseService {
   }
   private convertToDTO(course: Course): CourseDTO {
     return mapCourseToDTO(course);
+  }
+
+  private async processStudent(
+    studentId: number,
+    courseId: number,
+    del: boolean,
+    studentRepository: any,
+    success: number[],
+    failed: number[],
+    transaction: Transaction
+  ) {
+    try {
+      const student: Student | null = await studentRepository.findById(
+        studentId,
+        transaction
+      );
+
+      if (
+        !student ||
+        (!del && student.courseId != null) ||
+        (del && student.courseId == null)
+      ) {
+        failed.push(studentId);
+      } else {
+        student.courseId = del ? null : courseId;
+        await studentRepository.update(student, transaction);
+        success.push(studentId);
+      }
+    } catch (error: any) {
+      console.error(
+        `Falha ao adicionar/remover estudante: ${studentId}: ${error.message}`
+      );
+      failed.push(studentId);
+    }
   }
 }

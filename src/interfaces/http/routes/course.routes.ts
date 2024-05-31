@@ -108,12 +108,51 @@ router.post(
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/CourseFullResponse'
+ *               $ref: '#/components/schemas/CourseChangeStudentResDTO'
  */
 router.post(
   "/:id/student",
   CourseValidationService.validateCourseAddStudent,
-  courseController.addStudent.bind(courseController)
+  (req, res) => {
+    courseController.changeStudentsCourse(req, res);
+  }
+);
+
+/**
+ * @swagger
+ * /course/{id}/student:
+ *   delete:
+ *     tags: [Course]
+ *     summary: Remove estudantes de um curso.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID do curso.
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/CourseAddStudentRequest'
+ *     responses:
+ *       200:
+ *         description: Estudantes adicionados com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseChangeStudentResDTO'
+ */
+router.delete(
+  "/:id/student",
+  CourseValidationService.validateCourseAddStudent,
+  (req, res) => {
+    courseController.changeStudentsCourse(req, res, true);
+  }
 );
 
 /**
@@ -184,7 +223,37 @@ router.put(
  */
 router.put(
   "/:id/teacher/:teacherId",
-  courseController.updateCourse.bind(courseController)
+  courseController.updateTeacher.bind(courseController)
+);
+
+/**
+ * @swagger
+ * /course/{id}/teacher:
+ *   delete:
+ *     tags: [Course]
+ *     summary: Remove o professor de um curso existente.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID do curso.
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Professor removido com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseFullResponse'
+ *       404:
+ *         description: Curso não encontrado.
+ */
+router.delete(
+  "/:id/teacher",
+  courseController.removeTeacher.bind(courseController)
 );
 
 /**

@@ -4,7 +4,7 @@ import {
   CourseAddStudentSchema,
 } from "../../schemas/CourseSchema";
 import { Course } from "../../../domain/models";
-import { CourseAddStudentReqDTO } from "../../dto/course/CourseAddStudentReqDTO";
+import { CourseAddStudentReqDTO } from "../../dto/course/CourseChangeStudentDTO";
 
 export default class CourseSchemaService {
   static async validateCourseCreate(

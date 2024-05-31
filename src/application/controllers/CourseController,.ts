@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
-import { Course } from "../../domain/models";
 import { CourseService } from "../services/course/CourseService";
 import { CourseRequestDTO } from "../dto/course/CourseRequestDTO";
 import { CourseDTO } from "../dto/course/CourseDTO";
 import { CourseResponseDTO } from "../dto/course/CourseResponseDTO";
 import {
-  CourseAddStudentReqDTO,
-  CourseAddStudentResDTO,
-} from "../dto/course/CourseAddStudentReqDTO";
+  CourseChangeStudentReqDTO,
+  CourseChangeStudentResDTO,
+} from "../dto/course/CourseChangeStudentDTO";
 
 export class CourseController {
   private courseService: CourseService;
@@ -84,12 +83,27 @@ export class CourseController {
       res.status(500).json({ message: error.message });
     }
   }
-  async addStudent(req: Request, res: Response): Promise<void> {
+  async removeTeacher(req: Request, res: Response): Promise<void> {
     try {
       const id: number = parseInt(req.params.id);
-      const studentsId: CourseAddStudentReqDTO = req.body;
-      const response: CourseAddStudentResDTO =
-        await this.courseService.addStudents(id, studentsId);
+      const updatedCourse: CourseDTO =
+        await this.courseService.removeTeacher(id);
+      res.json(updatedCourse);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  async changeStudentsCourse(
+    req: Request,
+    res: Response,
+    del: boolean = false
+  ): Promise<void> {
+    try {
+      const id: number = parseInt(req.params.id);
+      const studentsId: CourseChangeStudentReqDTO = req.body;
+      const response: CourseChangeStudentResDTO =
+        await this.courseService.changeStudents(id, studentsId, del);
       res.json(response);
     } catch (error: any) {
       res.status(500).json({ message: error.message });

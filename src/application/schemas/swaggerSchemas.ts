@@ -45,16 +45,34 @@
  *         - active
  *         - description
  *
+ *     CourseChangeStudentResDTO:
+ *       type: object
+ *       properties:
+ *         courseId:
+ *           type: number
+ *           example: 123
+ *         course:
+ *           type: string
+ *           example: "Curso de TypeScript"
+ *         success:
+ *           type: array
+ *           items:
+ *             type: number
+ *           example: [101, 102, 103]
+ *         failed:
+ *           type: array
+ *           items:
+ *             type: number
+ *           example: [104, 105]
+ *
  *     CourseAddStudentRequest:
  *       type: object
  *       properties:
- *         properties:
  *         studentIds:
  *           type: array
  *           items:
- *             type: integer
- *             example: 1
- *             minimum: 1
+ *             type: number
+ *           example: [1, 2, 3]
  *       required:
  *         - studentIds
  *
