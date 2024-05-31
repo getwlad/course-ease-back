@@ -73,7 +73,7 @@ export class TeacherService {
 
   async deleteTeacher(id: number): Promise<void> {
     const teacher: Teacher = await this.findTeacherById(id);
-    return this.teacherRepository.delete(teacher);
+    await this.teacherRepository.delete(teacher);
   }
 
   private convertToRespDTO(teacher: Teacher): TeacherResponseDTO {

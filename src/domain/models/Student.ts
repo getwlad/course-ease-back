@@ -51,6 +51,13 @@ export default class Student extends Model {
   })
   personId!: number;
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  })
+  active!: boolean;
+
   @BelongsTo(() => Person)
   person!: Person;
 

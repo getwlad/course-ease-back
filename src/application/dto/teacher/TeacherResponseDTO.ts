@@ -12,6 +12,7 @@ export interface TeacherResponseDTO {
   experienceYears: number;
   course: CourseDTO | null;
   personData: PersonResponseDTO;
+  active: boolean;
 }
 
 export function mapTeacherToResponseDTO(teacher: Teacher): TeacherResponseDTO {
@@ -24,5 +25,6 @@ export function mapTeacherToResponseDTO(teacher: Teacher): TeacherResponseDTO {
     course: teacher.course?.id
       ? mapCourseToDTO(teacher.course, teacher.person!.name!)
       : null,
+    active: teacher.active,
   };
 }

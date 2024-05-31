@@ -29,5 +29,6 @@ export const TeacherUpdateSchema = yup.object().shape({
   experienceYears: yup
     .number()
     .required("O campo de anos de experiência é obrigatório"),
+  active: yup.boolean().required(),
   personData: PersonRequestSchema.required(),
 });

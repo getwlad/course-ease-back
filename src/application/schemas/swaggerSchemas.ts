@@ -120,6 +120,8 @@
  *     StudentUpdate:
  *       type: object
  *       properties:
+ *         active:
+ *           type: boolean
  *         personData:
  *           $ref: '#/components/schemas/PersonRequest'
  *       required:
@@ -137,6 +139,9 @@
  *         enrollment:
  *           type: string
  *           example: "20210001"
+ *         active:
+ *           type: boolean
+ *           example: true
  *         course:
  *           $ref: '#/components/schemas/CourseResponse'
  *         personData:
@@ -175,6 +180,8 @@
  *         experienceYears:
  *           type: integer
  *           example: 10
+ *         active:
+ *           type: boolean
  *         personData:
  *           $ref: '#/components/schemas/PersonRequest'
  *       required:
@@ -197,6 +204,9 @@
  *         experienceYears:
  *           type: integer
  *           example: 10
+ *         active:
+ *           type: boolean
+ *           example: true
  *         course:
  *           $ref: '#/components/schemas/CourseResponse'
  *         personData:
@@ -287,6 +297,9 @@
  *         name:
  *           type: string
  *           example: "Jane Smith"
+ *         active:
+ *           type: boolean
+ *           example: true
  *
  *     TeacherResponse:
  *       type: object
@@ -303,4 +316,7 @@
  *         name:
  *           type: string
  *           example: "John Doe"
+ *         active:
+ *           type: boolean
+ *           example: true
  */

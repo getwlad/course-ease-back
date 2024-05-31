@@ -83,20 +83,10 @@ export class StudentRepository {
     return this.reloadModel(student);
   }
 
-  async delete(student: Student): Promise<void> {
-    let transaction;
-    try {
-      transaction = await sequelize.transaction();
-
-      await student.person.destroy({ transaction });
-
-      await student.destroy({ transaction });
-
-      await transaction.commit();
-    } catch (error) {
-      if (transaction) await transaction.rollback();
-      throw error;
-    }
+  async delete(student: Student): Promise<Student> {
+    student.active = false;
+    await this.update(student);
+    return student;
   }
 
   async reloadModel(student: Student) {

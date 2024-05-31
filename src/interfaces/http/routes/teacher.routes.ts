@@ -122,19 +122,19 @@ router.put(
  * /teacher/{id}:
  *   delete:
  *     tags: [Teacher]
- *     summary: Exclui permanentemente um professor.
+ *     summary: Desativa um professor.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID do professor a ser excluído.
+ *         description: ID do professor a ser desativado.
  *         schema:
  *           type: string
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Professor excluído com sucesso.
+ *         description: Professor desativado com sucesso.
  *       404:
  *         description: Professor não encontrado.
  */

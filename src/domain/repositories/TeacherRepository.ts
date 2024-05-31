@@ -63,20 +63,10 @@ export class TeacherRepository {
     return this.reloadModel(teacher);
   }
 
-  async delete(teacher: Teacher): Promise<void> {
-    let transaction;
-    try {
-      transaction = await sequelize.transaction();
-
-      await teacher.person.destroy({ transaction });
-
-      await teacher.destroy({ transaction });
-
-      await transaction.commit();
-    } catch (error) {
-      if (transaction) await transaction.rollback();
-      throw error;
-    }
+  async delete(teacher: Teacher): Promise<Teacher> {
+    teacher.active = false;
+    await this.update(teacher);
+    return teacher;
   }
 
   async existsByCNPJ(cnpj: string): Promise<boolean> {

@@ -4,6 +4,7 @@ export interface StudentDTO {
   id: number;
   enrollment: string;
   name: string;
+  active: boolean;
 }
 
 export function mapStudentToDTO(student: Student): StudentDTO {
@@ -11,5 +12,6 @@ export function mapStudentToDTO(student: Student): StudentDTO {
     id: student.id,
     enrollment: student.enrollment,
     name: student.person.name,
+    active: student.active,
   };
 }

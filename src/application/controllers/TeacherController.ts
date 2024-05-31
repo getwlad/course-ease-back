@@ -59,7 +59,7 @@ export class TeacherController {
     try {
       const id: number = parseInt(req.params.id);
       await this.teacherService.deleteTeacher(id);
-      res.sendStatus(204);
+      res.sendStatus(200);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

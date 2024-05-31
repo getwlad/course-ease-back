@@ -122,19 +122,19 @@ router.put(
  * /student/{id}:
  *   delete:
  *     tags: [Student]
- *     summary: Exclui permanentemente um estudante.
+ *     summary: Desativa um estudante.
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID do estudante a ser excluído.
+ *         description: ID do estudante a ser desativado.
  *         schema:
  *           type: string
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         description: Estudante excluído com sucesso.
+ *         description: Estudante desativado com sucesso.
  *       404:
  *         description: Estudante não encontrado.
  */

@@ -10,5 +10,6 @@ export const StudentRequestSchema = yup.object().shape({
 });
 
 export const StudentUpdateSchema = yup.object().shape({
+  active: yup.boolean().required(),
   personData: PersonRequestSchema.required(),
 });

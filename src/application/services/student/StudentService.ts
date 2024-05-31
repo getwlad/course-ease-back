@@ -85,7 +85,7 @@ export class StudentService {
 
   async deleteStudent(id: number): Promise<void> {
     const student: Student = await this.findStudentById(id);
-    return await this.studentRepository.delete(student);
+    await this.studentRepository.delete(student);
   }
 
   private convertToRespDTO(student: Student): StudentResponseDTO {

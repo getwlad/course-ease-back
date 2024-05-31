@@ -76,6 +76,9 @@ export class CourseService {
     const course: Course = await this.findCourseById(id);
     const teacher: Teacher =
       await this.teacherService.findTeacherById(teacherId);
+    if (!teacher.active) {
+      throw new Error("Este professor foi desativado.");
+    }
     if (teacher.course != null) {
       throw new Error("O professor já está registrado em um curso.");
     }
@@ -160,6 +163,7 @@ export class CourseService {
 
       if (
         !student ||
+        (!del && student.active) ||
         (!del && student.courseId != null) ||
         (del && student.courseId == null)
       ) {

@@ -42,6 +42,13 @@ export default class Teacher extends Model {
   })
   experienceYears!: number;
 
+  @Column({
+    type: DataType.BOOLEAN,
+    allowNull: false,
+    defaultValue: true,
+  })
+  active!: boolean;
+
   @ForeignKey(() => Course)
   @Column({
     type: DataType.INTEGER,
