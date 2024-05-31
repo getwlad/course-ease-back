@@ -1,5 +1,5 @@
+import { PersonRequestDTO } from "../../application/dto/person/PersonRequestDTO";
 import { PersonRepository } from "../repositories/PersonRepository";
-import { UserRepository } from "../repositories/UserRepository";
 
 export class PersonValidationService {
   private personRepository: PersonRepository;
@@ -7,9 +7,18 @@ export class PersonValidationService {
   constructor() {
     this.personRepository = new PersonRepository();
   }
-  async validateUsernameRegistered(username: string): Promise<void> {
-    if (await this.userRepository.existsByUsername(username)) {
-      throw new Error(`Usuário já cadastrado.`);
+  async validateAll(person: PersonRequestDTO) {
+    await this.validateEmailRegistered(person.email);
+    await this.validatePhoneRegistered(person.phone);
+  }
+  async validateEmailRegistered(email: string): Promise<void> {
+    if (await this.personRepository.existsByEmail(email)) {
+      throw new Error(`Email já cadastrado.`);
+    }
+  }
+  async validatePhoneRegistered(phone: string): Promise<void> {
+    if (await this.personRepository.existsByPhone(phone)) {
+      throw new Error(`Telefone já cadastrado.`);
     }
   }
 }

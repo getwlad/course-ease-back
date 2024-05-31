@@ -194,6 +194,33 @@ router.put(
 
 /**
  * @swagger
+ * /course/{id}:
+ *   patch:
+ *     tags: [Course]
+ *     summary: Altera um curso para ativo ou inativo.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID do curso a ser alterado.
+ *         schema:
+ *           type: string
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Curso atualizado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CourseResponse'
+ *       404:
+ *         description: Curso não encontrado.
+ */
+router.patch("/:id", courseController.toggleActive.bind(courseController));
+
+/**
+ * @swagger
  * /course/{id}/teacher/{teacherId}:
  *   put:
  *     tags: [Course]

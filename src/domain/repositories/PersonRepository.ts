@@ -5,4 +5,12 @@ export class PersonRepository {
     await person.save();
     return person;
   }
+  async existsByPhone(phone: string): Promise<boolean> {
+    const person: Person | null = await Person.findOne({ where: { phone } });
+    return person != null;
+  }
+  async existsByEmail(email: string): Promise<boolean> {
+    const person: Person | null = await Person.findOne({ where: { email } });
+    return person != null;
+  }
 }

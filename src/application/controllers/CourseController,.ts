@@ -69,6 +69,16 @@ export class CourseController {
       res.status(500).json({ message: error.message });
     }
   }
+  async toggleActive(req: Request, res: Response): Promise<void> {
+    try {
+      const id: number = parseInt(req.params.id);
+      const updatedCourse: CourseDTO =
+        await this.courseService.toggleActive(id);
+      res.json(updatedCourse);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  }
 
   async updateTeacher(req: Request, res: Response): Promise<void> {
     try {

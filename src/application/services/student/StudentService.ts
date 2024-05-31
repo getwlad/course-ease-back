@@ -45,7 +45,7 @@ export class StudentService {
   async createStudent(
     studentData: StudentRequestDTO
   ): Promise<StudentResponseDTO> {
-    await this.studentValidation.validateCPFRegistered(studentData.cpf);
+    await this.studentValidation.validateCreate(studentData);
     let enrollment = uuidv4();
 
     while (await this.studentRepository.existsByEnrollment(enrollment)) {
@@ -72,7 +72,12 @@ export class StudentService {
     studentData: StudentUpdateDTO
   ): Promise<StudentResponseDTO> {
     const student: Student = await this.findStudentById(id);
-
+    if (student.person.phone != studentData.personData.phone) {
+      await this.studentValidation.validatePhone(studentData.personData.phone);
+    }
+    if (student.person.email != studentData.personData.email) {
+      await this.studentValidation.validateEmail(studentData.personData.email);
+    }
     Object.assign(student, studentData);
     Object.assign(student.person, studentData.personData);
     return this.convertToRespDTO(await this.studentRepository.update(student));

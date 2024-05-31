@@ -79,6 +79,15 @@ export class TeacherRepository {
     }
   }
 
+  async existsByCNPJ(cnpj: string): Promise<boolean> {
+    const teacher: Teacher | null = await Teacher.findOne({ where: { cnpj } });
+    return teacher != null;
+  }
+  async existsByCPF(cpf: string): Promise<boolean> {
+    const teacher: Teacher | null = await Teacher.findOne({ where: { cpf } });
+    return teacher != null;
+  }
+
   async reloadModel(teacher: Teacher) {
     return await teacher.reload({
       include: [

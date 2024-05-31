@@ -18,7 +18,7 @@ export const CourseRequestSchema = yup.object().shape({
     .required("A descrição é obrigatória"),
 });
 
-export const CourseAddStudentSchema = yup.object().shape({
+export const CourseChangeStudentSchema = yup.object().shape({
   studentIds: yup
     .array()
     .of(

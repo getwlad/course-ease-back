@@ -64,6 +64,12 @@ export class CourseService {
   async softDeleteCourse(id: number): Promise<void> {
     const course: Course = await this.findCourseById(id);
     course.active = false;
+    await this.courseRepository.update(course);
+  }
+  async toggleActive(id: number): Promise<CourseDTO> {
+    const course: Course = await this.findCourseById(id);
+    course.active = !course.active;
+    return mapCourseToDTO(await this.courseRepository.update(course));
   }
 
   async updateTeacher(id: number, teacherId: number): Promise<CourseDTO> {

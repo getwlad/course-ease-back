@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import {
   CourseRequestSchema,
-  CourseAddStudentSchema,
+  CourseChangeStudentSchema,
 } from "../../schemas/CourseSchema";
 import { Course } from "../../../domain/models";
-import { CourseAddStudentReqDTO } from "../../dto/course/CourseChangeStudentDTO";
+import { CourseChangeStudentReqDTO } from "../../dto/course/CourseChangeStudentDTO";
 
 export default class CourseSchemaService {
   static async validateCourseCreate(
@@ -26,9 +26,11 @@ export default class CourseSchemaService {
     res: Response,
     next: Function
   ) {
-    const courseData: CourseAddStudentReqDTO = req.body;
+    const courseData: CourseChangeStudentReqDTO = req.body;
     try {
-      await CourseAddStudentSchema.validate(courseData, { abortEarly: false });
+      await CourseChangeStudentSchema.validate(courseData, {
+        abortEarly: false,
+      });
       next();
     } catch (error: any) {
       res.status(400).json({ message: error.errors });
