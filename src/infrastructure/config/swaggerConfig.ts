@@ -7,12 +7,7 @@ const swaggerDefinition: SwaggerDefinition = {
     version: "1.0.0",
     description: "Documentação para a api da aplicação CourseEase",
   },
-  servers: [
-    {
-      url: "http://localhost:3000",
-      description: "Development server",
-    },
-  ],
+
   basePath: "/",
   components: {
     securitySchemes: {
