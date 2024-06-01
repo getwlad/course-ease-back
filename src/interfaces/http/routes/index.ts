@@ -4,6 +4,7 @@ import studentRoutes from "./student.routes";
 import teacherRoutes from "./teacher.routes";
 import userRoutes from "./user.routes";
 import sessionRoutes from "./session.route";
+import relatoryRoutes from "./relatory.routes";
 import { authenticateToken } from "../middlewares/middlewares";
 
 const router = Router();
@@ -47,6 +48,14 @@ router.use("/student", authenticateToken, studentRoutes);
  *   description: Controller de professores
  */
 router.use("/teacher", authenticateToken, teacherRoutes);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Relatory
+ *   description: Controller de relatórios
+ */
+router.use("/relatory", authenticateToken, relatoryRoutes);
 
 router.use((req, res, next) => {
   res.redirect("/docs");

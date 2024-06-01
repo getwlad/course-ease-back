@@ -163,7 +163,7 @@ export class CourseService {
 
       if (
         !student ||
-        (!del && student.active) ||
+        (!del && !student.active) ||
         (!del && student.courseId != null) ||
         (del && student.courseId == null)
       ) {

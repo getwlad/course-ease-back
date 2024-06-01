@@ -319,4 +319,76 @@
  *         active:
  *           type: boolean
  *           example: true
+ *     RelatoryResponseDTO:
+ *       type: object
+ *       properties:
+ *         totalCourses:
+ *           type: integer
+ *           example: 100
+ *         newCourses:
+ *           type: integer
+ *           example: 10
+ *         activeCourses:
+ *           type: integer
+ *           example: 80
+ *         totalStudents:
+ *           type: integer
+ *           example: 500
+ *         activeStudents:
+ *           type: integer
+ *           example: 450
+ *         enrolledStudents:
+ *           type: integer
+ *           example: 400
+ *         totalTeachers:
+ *           type: integer
+ *           example: 50
+ *         activeTeachers:
+ *           type: integer
+ *           example: 45
+ *         teachingTeachers:
+ *           type: integer
+ *           example: 40
+ *         coursesMostEnrolled:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Mathematics"
+ *               students:
+ *                 type: integer
+ *                 example: 100
+ *         totalGender:
+ *           type: object
+ *           properties:
+ *             male:
+ *               type: integer
+ *               example: 300
+ *             female:
+ *               type: integer
+ *               example: 150
+ *             others:
+ *               type: integer
+ *               example: 50
+ *         recentlyRegistered:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               nome:
+ *                 type: string
+ *                 example: "Jane Doe"
+ *               curso:
+ *                 type: string
+ *                 example: "Physics"
+ *                 nullable: true
+ *               ativo:
+ *                 type: boolean
+ *                 example: true
+ *               createdAt:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2023-05-15T10:00:00Z"
  */
