@@ -12,6 +12,7 @@ export interface StudentResponseDTO {
   course: CourseDTO | null;
   active: boolean;
   personData: PersonResponseDTO;
+  createdAt: Date;
 }
 
 export function mapStudentToResponseDTO(student: Student): StudentResponseDTO {
@@ -22,5 +23,6 @@ export function mapStudentToResponseDTO(student: Student): StudentResponseDTO {
     course: student.course?.id ? mapCourseToDTO(student.course) : null,
     active: student.active,
     personData: mapPersonToResponseDTO(student.person),
+    createdAt: student.createdAt,
   };
 }

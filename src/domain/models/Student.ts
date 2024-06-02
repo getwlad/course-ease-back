@@ -58,6 +58,13 @@ export default class Student extends Model {
   })
   active!: boolean;
 
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+  })
+  createdAt!: Date;
+
   @BelongsTo(() => Person)
   person!: Person;
 

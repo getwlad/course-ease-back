@@ -7,6 +7,7 @@ export interface PersonResponseDTO {
   phone: string;
   birthDate: Date;
   gender: "masculino" | "feminino" | "outros";
+  createdAt: Date;
 }
 
 export function mapPersonToResponseDTO(person: Person): PersonResponseDTO {
@@ -17,5 +18,6 @@ export function mapPersonToResponseDTO(person: Person): PersonResponseDTO {
     phone: person.phone,
     birthDate: person.birthDate,
     gender: person.gender,
+    createdAt: person.createdAt,
   };
 }

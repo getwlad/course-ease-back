@@ -10,6 +10,7 @@ export interface CourseResponseDTO {
   description: string;
   teacher: TeacherDTO | null;
   students: StudentDTO[];
+  createdAt: Date;
 }
 
 export function mapCourseToResponseDTO(course: Course): CourseResponseDTO {
@@ -19,6 +20,7 @@ export function mapCourseToResponseDTO(course: Course): CourseResponseDTO {
     category: course.category,
     active: course.active,
     description: course.description,
+    createdAt: course.createdAt,
     teacher: course.teacher?.id ? mapTeacherToDTO(course.teacher) : null,
     students:
       course.students?.length > 0 ? course.students.map(mapStudentToDTO) : [],

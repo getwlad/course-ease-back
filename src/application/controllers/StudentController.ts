@@ -59,7 +59,7 @@ export class StudentController {
     try {
       const id: number = parseInt(req.params.id);
       await this.studentService.deleteStudent(id);
-      res.sendStatus(200);
+      res.json().sendStatus(200);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

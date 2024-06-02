@@ -10,15 +10,18 @@ import {
 } from "../../dto/student/StudentResponseDTO";
 import { CourseValidationService } from "../../../domain/services/CourseValidationService";
 import { StudentUpdateDTO } from "../../dto/student/StudentUpdateDTO";
+import { PersonService } from "../person/PersonService";
 
 export class StudentService {
   private studentRepository: StudentRepository;
   private studentValidation: StudentValidationService;
   private courseValidationService: CourseValidationService;
+  private personService: PersonService;
   constructor() {
     this.studentRepository = new StudentRepository();
     this.studentValidation = new StudentValidationService();
     this.courseValidationService = new CourseValidationService();
+    this.personService = new PersonService();
   }
 
   getStudentRepository(): StudentRepository {
@@ -80,6 +83,7 @@ export class StudentService {
     }
     Object.assign(student, studentData);
     Object.assign(student.person, studentData.personData);
+    await this.personService.updatePerson(student.person);
     return this.convertToRespDTO(await this.studentRepository.update(student));
   }
 

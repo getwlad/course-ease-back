@@ -47,7 +47,7 @@ export class UserController {
     try {
       const id: number = parseInt(req.params.id);
       await this.userService.softDeleteUser(id);
-      res.status(204);
+      res.json().status(204);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

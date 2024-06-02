@@ -64,7 +64,7 @@ export class CourseController {
     try {
       const id: number = parseInt(req.params.id);
       await this.courseService.softDeleteCourse(id);
-      res.status(204);
+      res.json().status(204);
     } catch (error: any) {
       res.status(500).json({ message: error.message });
     }

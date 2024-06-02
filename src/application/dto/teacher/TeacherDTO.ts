@@ -6,6 +6,7 @@ export interface TeacherDTO {
   experienceYears: number;
   name: string;
   active: boolean;
+  createdAt: Date;
 }
 
 export function mapTeacherToDTO(teacher: Teacher): TeacherDTO {
@@ -15,5 +16,6 @@ export function mapTeacherToDTO(teacher: Teacher): TeacherDTO {
     experienceYears: teacher.experienceYears,
     name: teacher.person.name,
     active: teacher.active,
+    createdAt: teacher.createdAt,
   };
 }

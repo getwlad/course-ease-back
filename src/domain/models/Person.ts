@@ -43,6 +43,12 @@ export default class Person extends Model {
   birthDate!: Date;
 
   @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+  })
+  createdAt!: Date;
+  @Column({
     type: DataType.ENUM("masculino", "feminino", "outros"),
     allowNull: false,
   })

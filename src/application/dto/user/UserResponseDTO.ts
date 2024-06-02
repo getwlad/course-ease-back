@@ -4,6 +4,7 @@ export interface UserResponseDTO {
   id: number;
   username: string;
   active: boolean;
+  createdAt: Date;
 }
 
 export function mapUserToRespDTO(user: User): UserResponseDTO {
@@ -11,5 +12,6 @@ export function mapUserToRespDTO(user: User): UserResponseDTO {
     id: user.id,
     username: user.username,
     active: user.active,
+    createdAt: user.createdAt,
   };
 }

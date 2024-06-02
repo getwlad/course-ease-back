@@ -39,6 +39,13 @@ export default class User extends Model {
   })
   active!: boolean;
 
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+  })
+  createdAt!: Date;
+
   @BeforeSave
   static async hashPassword(user: User) {
     if (user.changed("password")) {

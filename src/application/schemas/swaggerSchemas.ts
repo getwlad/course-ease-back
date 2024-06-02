@@ -23,6 +23,10 @@
  *         teacher:
  *           type: string
  *           example: "Maria Antonieta."
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-06-02T12:00:00Z"
  *
  *     CourseRequest:
  *       type: object
@@ -100,6 +104,10 @@
  *           type: array
  *           items:
  *             $ref: '#/components/schemas/StudentResponse'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-06-02T12:00:00Z"
  *
  *     StudentRequest:
  *       type: object
@@ -146,6 +154,10 @@
  *           $ref: '#/components/schemas/CourseResponse'
  *         personData:
  *           $ref: '#/components/schemas/PersonResponse'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-06-02T12:00:00Z"
  *
  *     TeacherRequest:
  *       type: object
@@ -211,6 +223,10 @@
  *           $ref: '#/components/schemas/CourseResponse'
  *         personData:
  *           $ref: '#/components/schemas/PersonResponse'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           example: "2024-06-02T12:00:00Z"
  *
  *     UserRequest:
  *       type: object

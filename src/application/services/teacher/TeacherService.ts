@@ -9,16 +9,18 @@ import {
   mapTeacherToResponseDTO,
 } from "../../dto/teacher/TeacherResponseDTO";
 import { TeacherUpdateDTO } from "../../dto/teacher/TeacherUpdateDTO";
+import { PersonService } from "../person/PersonService";
 
 export class TeacherService {
   private teacherRepository: TeacherRepository;
   private courseValidationService: CourseValidationService;
   private teacherValidation: TeacherValidationService;
-
+  private personService: PersonService;
   constructor() {
     this.teacherRepository = new TeacherRepository();
     this.courseValidationService = new CourseValidationService();
     this.teacherValidation = new TeacherValidationService();
+    this.personService = new PersonService();
   }
 
   async getAllTeachers(): Promise<TeacherDTO[]> {
@@ -64,6 +66,7 @@ export class TeacherService {
     }
     Object.assign(teacher, teacherData);
     Object.assign(teacher.person, teacherData.personData);
+    await this.personService.updatePerson(teacher.person);
     return this.update(teacher);
   }
 

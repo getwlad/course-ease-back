@@ -7,6 +7,7 @@ export interface CourseDTO {
   active: boolean;
   description: string;
   teacher: string | null;
+  createdAt: Date;
 }
 
 export function mapCourseToDTO(
@@ -20,5 +21,6 @@ export function mapCourseToDTO(
     active: course.active,
     description: course.description,
     teacher: course.teacher?.id ? course.teacher.person.name : teacherName,
+    createdAt: course.createdAt,
   };
 }

@@ -70,11 +70,15 @@ export class TeacherRepository {
   }
 
   async existsByCNPJ(cnpj: string): Promise<boolean> {
-    const teacher: Teacher | null = await Teacher.findOne({ where: { cnpj } });
+    const teacher: Teacher | null = await Teacher.findOne({
+      where: { cpfCnpj: cnpj },
+    });
     return teacher != null;
   }
   async existsByCPF(cpf: string): Promise<boolean> {
-    const teacher: Teacher | null = await Teacher.findOne({ where: { cpf } });
+    const teacher: Teacher | null = await Teacher.findOne({
+      where: { cpfCnpj: cpf },
+    });
     return teacher != null;
   }
 

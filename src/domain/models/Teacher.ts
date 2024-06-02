@@ -56,6 +56,13 @@ export default class Teacher extends Model {
   })
   courseId!: number | null;
 
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+  })
+  createdAt!: Date;
+
   @ForeignKey(() => Person)
   @Column({
     type: DataType.INTEGER,

@@ -48,6 +48,13 @@ export default class Course extends Model {
   })
   description!: string;
 
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: DataType.NOW,
+  })
+  createdAt!: Date;
+
   @HasOne(() => Teacher)
   teacher!: Teacher;
 
