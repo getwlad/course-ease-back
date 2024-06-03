@@ -13,6 +13,19 @@ const studentController = new StudentController();
  *     summary: Retorna todos os estudantes.
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: matriculate
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Filtra estudantes se estao matriculados em um curso ou não (true/false)
+ *       - in: query
+ *         name: active
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Filtra estudantes se estao ativos ou não (true/false)
  *     responses:
  *       200:
  *         description: Lista de todos os estudantes.

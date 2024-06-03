@@ -14,7 +14,19 @@ export class StudentController {
 
   async getAllStudents(req: Request, res: Response): Promise<void> {
     try {
-      const students: StudentDTO[] = await this.studentService.getAllStudents();
+      const matriculated = req.query.matriculate === "true";
+      const active = req.query.active === "true";
+      let params = {};
+      if (!matriculated && req.query.matriculate) {
+        params = { ...params, matriculated };
+      } else if (matriculated && req.query.matriculate) {
+        params = { ...params, matriculated };
+      }
+      if (req.query.active != undefined) {
+        params = { ...params, active };
+      }
+      const students: StudentDTO[] =
+        await this.studentService.getAllStudents(params);
       res.json(students);
     } catch (error: any) {
       res.status(500).json({ message: error.message });

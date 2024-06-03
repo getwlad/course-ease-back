@@ -28,8 +28,10 @@ export class StudentService {
     return this.studentRepository;
   }
 
-  async getAllStudents(): Promise<StudentDTO[]> {
-    return (await this.studentRepository.findAll()).map(this.convertToDTO);
+  async getAllStudents({ ...params }): Promise<StudentDTO[]> {
+    return (await this.studentRepository.findAll({ ...params })).map(
+      this.convertToDTO
+    );
   }
 
   async findStudentById(id: number): Promise<Student> {

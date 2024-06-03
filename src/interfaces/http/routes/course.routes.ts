@@ -120,8 +120,8 @@ router.post(
 
 /**
  * @swagger
- * /course/{id}/student:
- *   delete:
+ * /course/{id}/student/remove:
+ *   post:
  *     tags: [Course]
  *     summary: Remove estudantes de um curso.
  *     parameters:
@@ -147,8 +147,8 @@ router.post(
  *             schema:
  *               $ref: '#/components/schemas/CourseChangeStudentResDTO'
  */
-router.delete(
-  "/:id/student",
+router.post(
+  "/:id/student/remove",
   CourseValidationService.validateCourseAddStudent,
   (req, res) => {
     courseController.changeStudentsCourse(req, res, true);

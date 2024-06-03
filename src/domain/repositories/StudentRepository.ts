@@ -2,10 +2,22 @@ import { Course, Student, Teacher } from "../models";
 import { Person } from "../models";
 import sequelize from "../../infrastructure/database/sequelize";
 import { Transaction } from "sequelize";
+import { Op } from "sequelize";
 
 export class StudentRepository {
-  async findAll(): Promise<Student[]> {
+  async findAll({ ...whereCondition }): Promise<Student[]> {
+    if (whereCondition.matriculated != undefined) {
+      if (whereCondition.matriculated === true) {
+        whereCondition = { ...whereCondition, courseId: { [Op.not]: null } };
+      } else if (whereCondition.matriculated === false) {
+        whereCondition = { ...whereCondition, courseId: { [Op.is]: null } };
+      }
+
+      delete whereCondition.matriculated;
+    }
+
     return Student.findAll({
+      where: whereCondition,
       nest: true,
       include: [
         {
