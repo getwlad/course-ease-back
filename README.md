@@ -23,7 +23,6 @@ API em produção: [CourseEaseAPI](https://courseease.onrender.com/docs/)
 - Estudantes
 - Professores
 - Usuário
-- Módulos
 
 ### Gerar
 
