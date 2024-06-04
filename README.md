@@ -32,7 +32,7 @@ API em produção: [CourseEaseAPI](https://courseease.onrender.com/docs/)
 ## :floppy_disk: Documentação
 
 A documentação está disponível na url `/docs` <br>
-<img src="./docs/docSwag.png" alt="Swagger img">
+<img src="./docs/swagger.png" alt="Swagger img">
 
 ## :hammer_and_wrench: Instalação
 
