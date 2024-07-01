@@ -1,9 +1,10 @@
-# Course Ease App
+# Course Ease Back API
 
 ## :world_map: Índice
 
 - [Sobre o Projeto](#information_source-sobre-o-projeto)
 - [Funcionalidades](#hammer-funcionalidades)
+- [Documentação](#floppy_disk-documentação)
 - [Instalação](#hammer_and_wrench-instalação)
 - [Sprints](#bulb-sprints)
 - [Tecnologias e Recursos](#open_book-tecnologias-e-recursos-utilizados)
@@ -11,8 +12,8 @@
 ## :information_source: Sobre o projeto
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20MELHORIA%20CONTÍNUA&color=GREEN&style=for-the-badge)<br>
-A app faz parte do sistema Course Easse para gestão de cursos. <br>
-App em produção: [CourseEaseAPP](https://courseease.vercel.app/)
+A API faz parte do sistema Course Easse para gestão de cursos. <br>
+API em produção: [CourseEaseAPI](https://courseease.onrender.com/docs/)
 
 ## :hammer: Funcionalidades
 
@@ -21,45 +22,33 @@ App em produção: [CourseEaseAPP](https://courseease.vercel.app/)
 - Cursos
 - Estudantes
 - Professores
-- Usuários
+- Usuário
 
 ### Gerar
 
 - Relatório de determinadas informações
 
-### Imagens layout: <br>
+## :floppy_disk: Documentação
 
-<details>
-  <summary>Layout Desktop</summary>
-<img src="./docs/captura-desk-1.png" alt="Desk 1">
-<img src="./docs/captura-desk-2.png" alt="Desk 2">
-<img src="./docs/captura-desk-3.png" alt="Desk 3">
-</p>
-</details>
-<details>
-  <summary>Layout Mobile</summary>
-<img src="./docs/captura-mobile-1.png" alt="Mob 1" width="256">
-<img src="./docs/captura-mobile-2.png" alt="Mob 2" width="256">
-<img src="./docs/captura-mobile-3.png" alt="Mob 3" width="256">
-</details>
+A documentação está disponível na url `/docs` <br>
+<img src="./docs/swagger.png" alt="Swagger img">
 
 ## :hammer_and_wrench: Instalação
 
 Você pode obter uma cópia do projeto caso tenha o git instalado, através do comando:
 
 ```bash
-git clone https://github.com/getwlad/vs13-formacao-complementar-node-angular-front.git
+git clone https://github.com/getwlad/vs13-formacao-complementar-node-angular-api.git
 ```
 
-Utilize uma IDE compatível com Node js para executar a aplicação e execute os comandos:
+Utilize uma IDE compatível com Node js para executar a aplicação ou utilize o Docker para gerar a imagem e executar a partir de um container.
 
-```bash
-npm install -g @angular/cli
-npm i
-ng serve
-```
+No arquivo `.env.example` temos variáveis que devem ser ser configuradas, substitua pelas suas configurações.<br>
+As migrations serão executadas assim que iniciar o projeto. <br>
 
-No arquivo `.src/app/services/api.service.ts` é necessário definir o url da api.<br>
+### Diagrama do banco de dados: <br>
+
+<img src="./docs/postgres.png" alt="Diagrama banco">
 
 ## :bulb: Sprints
 
@@ -69,8 +58,13 @@ No arquivo `.src/app/services/api.service.ts` é necessário definir o url da ap
 
 ## :open_book: Tecnologias e Recursos Utilizados
 
-![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 [![Trello](https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/)
 [![Git](https://img.shields.io/badge/GIT-E44C30?&style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/doc)
 [![GitHub](https://img.shields.io/badge/GitHub-100000?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/)
