@@ -13,8 +13,8 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20MELHORIA%20CONTÍNUA&color=GREEN&style=for-the-badge)<br>
 A API faz parte do sistema Course Easse para gestão de cursos. <br>
-API em produção: [CourseEaseAPI](https://courseease.onrender.com/docs/)
-
+API em produção: [CourseEaseAPI](https://courseease.onrender.com/docs/) <br>
+Link Front: [CourseEaseAPI](https://github.com/getwlad/course-ease-back) 
 ## :hammer: Funcionalidades
 
 ### Criar, obter, listar, atualizar ou desativar:
